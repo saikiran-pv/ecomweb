@@ -1,0 +1,29 @@
+<p style="color: green"><%= notice %></p>
+<!-------------------------------------------------------------------------------------------->
+<div class="text-center">
+<h1>Stores</h1>
+<%= link_to "Add new store", new_store_path %>
+</div>
+  <div class="row">
+    <% @stores.each do |store|%>
+        <div class="col-md-4">
+          <div class="store-box">
+                <ul>
+                  
+                      <strong><%= store.store_name%></strong><br>
+                      <%= store.description%><br>
+                      <%= link_to "Show", store%> |
+                      <%=link_to "Edit", edit_store_path(store)%> |
+                      <%= link_to "Destroy", store, method: :delete, data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  }%>
+                    
+                </ul>
+          </div>
+        </div>
+    <%end%>
+  </div>
+
+<br>
+

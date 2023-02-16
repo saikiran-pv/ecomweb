@@ -1,0 +1,46 @@
+<div class="mybox">
+      <div class="left">
+        <% if @product.image?%>
+          <%= image_tag @product.image.url, class:"product-show"%>
+          <%else %>
+          <%= render plain: "OK" %>
+        <% end %>
+      </div>
+
+      <div class="right" >
+        <%= render @product %>
+
+        <%= link_to "Edit this product", edit_product_path(@product) %> |
+
+        <% if @store %>
+          <%= link_to "Back to store",  store_products_path(id: @store.id)%><br><br>
+        <% else %>
+          <%= link_to "Back to all products", all_products_path %>
+        <% end %>
+
+        <%= button_to "Destroy this product", [@product.store,@product], data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure?"
+                      } %>
+
+      </div>
+</div>
+
+<style>
+  .left{
+    position: absolute;
+  }
+  .right{
+    position:absolute;
+    float:right;
+    margin-left: 850px;
+  }
+  .mybox{
+    align-content: center;
+    position:relative;
+    top:175px;
+    display:block;
+    text-align: center;
+  }
+</style>
+

@@ -1,0 +1,40 @@
+<p style="color: green"><%= notice %></p>
+ 
+ <div class="tothecenter">
+  <%= render @store %>
+
+  <div>
+    <%= link_to "Edit this store", edit_store_path(@store) %> |
+    <%= link_to "Back to stores", stores_path %><br>
+    <br>
+    <%= button_to "Destroy this store", @store, data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %>
+  </div>
+
+  <style>
+   .tothecenter{
+    align-content: center;
+    position:relative;
+    top:175px;
+    /* top:50px; */
+    display:block;
+  /* margin:auto; */
+  text-align: center;
+  /* margin-top: 250px; */
+ }
+  </style>
+
+
+<br>
+<%= link_to "Add products to this store" ,new_store_product_path(@store)%>
+
+<br>
+<br>
+
+<div>
+  <%= link_to "Show products", store_products_path(@store) %>
+</div>
+</div>
+
