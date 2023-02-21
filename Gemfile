@@ -29,6 +29,10 @@ gem "will_paginate"
 
 gem "imagemagick-binaries"
 
+gem 'jquery-rails'
+
+gem 'pg_search'
+
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
@@ -36,6 +40,8 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 gem "carrierwave"
+
+gem "rails_refactor"
 
 gem "ransack"
 # Use Redis adapter to run Action Cable in production

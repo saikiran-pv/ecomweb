@@ -1,30 +1,43 @@
 
-<div class="pagenum">
-  <br><br><%= will_paginate @products%>
+<br><br>
+<div class="apple_pagination">
+  <div class="page_info">
+    <%= page_entries_info @products %>
+  </div>
+  
+    <%= will_paginate @products, :container => false %><br>
+
+    <%= form_with url: all_products_path , method: :get do |form| %>
+      <%= form.number_field :per_page %>
+      <%= form.submit %>
+    <% end %> 
+</div><br>
+
+<div class="pagenum1">
+  <%= form_with url: all_products_path , method: :get do |form| %>
+    <%= form.label :sort_by %>
+    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low"]%>
+    <%= form.submit %>
+  <% end %>
+</div><br>
+ 
+<div class="row">
+  <% @products.each do |product|%>
+      <div class="col-md-4" onclick="show(this)">
+
+        <div class="product-box" id="product-box">
+            <%=image_tag product.image.url, class:"product-index" if product.image?%>
+              <ul>
+                    <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
+                        Rs.<%= product.price%><br>
+                        <span>&#11088;</span><%= product.rating%><br>
+                    
+                        <%= link_to "", product_path(code: product.code)%>
+                    
+              </ul>
+        </div>
+      </div>
+  <%end%>
 </div>
 
-<style>
-.pagenum{
-  margin-left:700px;
-}
-</style>
-
-  <div class="row">
-          
-    <% @products.each do |product|%>
-        <div class="col-md-4">
-          <div class="product-box" id="product-box">
-              <%=image_tag product.image.url, class:"product-index" if product.image?%>
-                <ul>
-                      <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
-                      Rs.<%= product.price%><br>
-                        
-                      <%= link_to "Show", product %>
-                      
-                </ul>
-          </div>
-        </div>
-    <%end%>
-  </div>
-
-
+<%= javascript_include_tag "show"%>

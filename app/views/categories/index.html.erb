@@ -1,0 +1,25 @@
+
+<!------------------------------------------------------------------------>
+<p style="color: green"><%= notice %></p>
+<!-------------------------------------------------------------------------------------------->
+<div class="text-center"  style="margin-top:70px;">
+<h1>Categories</h1>
+<%= link_to "Add new category", new_category_path %>
+</div>
+  <div class="row">
+    <% @categories.each do |category|%>
+        <div class="col-md-4" onclick="show(this)">
+          <div class="category-box">
+                <ul>
+                  
+                      <strong><%= category.category_name%></strong><br>
+                      <%= category.description%><br>
+                      
+                      <%= link_to "", category %>
+                    
+                </ul>
+          </div>
+        </div>
+    <%end%>
+  </div>
+<%= javascript_include_tag "show"%>

@@ -1,67 +1,93 @@
-<%= form_with url: store_products_path do |form| %>
-  <% if product.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+<div class=productform, style="margin-left:145px;">
+    <%= form_with url: products_path do |form| %>
+      <% if product.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-      <ul>
-        <% product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+          <ul>
+            <% product.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+    <div class="row">
+      <div class="col-md-4">
+        <%= form.label :product_name, style: "display: block" %>
+        <%= form.text_field :product_name %>
+      </div>
+ 
+      <div class="col-md-4">
+        <%= form.label :description, style: "display: block" %>
+        <%= form.text_area :description %>
+      </div>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :product_name, style: "display: block" %>
-    <%= form.text_field :product_name %>
-  </div>
+    <div class="row">
+      <div class="col-md-4">
+        <%= form.label :price, style: "display: block" %>
+        <%= form.number_field :price %>
+      </div>
 
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
-  </div>
+      <div class="col-md-4">
+        <%= form.label :rating, style:"display: block"%>
+        <%= form.number_field :rating , step:0.01%>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
+    <div class="row">
+      <div class="col-md-4">
+        <%= form.label :category, style: "display: block"  %>
+        <%= select_tag "category_id", options_from_collection_for_select(Category.all, "category_name", "category_name") %>
+      </div>
+      <div class="col-md-4">
+        <%= form.label :store, style: "display: block"  %>
+        <%= select_tag "store_id", options_from_collection_for_select(Store.all, "store_name", "store_name") %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :rating, style:"display: block"%>
-    <%= form.number_field :rating , step:0.01%>
-  </div>
+    <div class="row">
+      <div class="col-md-4">
+        <%= form.label :code, style: "display:block"%>
+        <%= form.number_field :code %>
+      </div>
 
-  
+      <div class="col-md-4">
+        <%= form.label :discount, style: "display: block" %>
+        <%= form.number_field :discount %>
+      </div>
 
-  <div>
-    <%= form.label :discount, style: "display: block" %>
-    <%= form.number_field :discount %>
-  </div>
+      <div class="col-md-4">
+        <%= form.label :visibility, style: "display: block" %>
+        <%= form.check_box :visibility %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :visibility, style: "display: block" %>
-    <%= form.check_box :visibility %>
-  </div>
+      <div>
+        <%= form.label :image, style: "display: block" %>
+        <%= form.file_field :image %>
+        <!--
+        <% if @product.image %>
+          <%= form.check_box :remove_image%>
+        Remove image
+        <%end%>
+        -->
+      </div>
 
-  <div>
-    <%= form.label :image, style: "display: block" %>
-    <%= form.file_field :image %>
-    <!--
-    <% if @product.image %>
-      <%= form.check_box :remove_image%>
-    Remove image
-    <%end%>
-    -->
-  </div>
+      <% if product.image.present?%>
+      <div>
+        <%= image_tag product.image.url%>
+      </div>
+      <% end %>
 
-  <% if product.image.present?%>
-  <div>
-    <%= image_tag product.image.url%>
-  </div>
-  <% end %>
-
-
-  <div>
-    <%= form.submit%>
-  </div>
-<% end %>
+      <div>
+        <%= form.submit%>
+      </div>
+    <% end %>
+</div>
+<style>
+.productfrom{
+  margin-left:145px;
+}
+</style>
