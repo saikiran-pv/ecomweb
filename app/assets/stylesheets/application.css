@@ -19,25 +19,26 @@
 
 
  img.product-show {
-   color:black;
-   margin:auto;
-   width: 400px;
-   height: 500px;
-   margin-left: 250px;
-   margin-top: -80px;
-   /* align-items: center; */
+  color:black;
+  margin:auto;
+  width: 400px;
+  height: 500px;
+  margin-left: 250px;
+  margin-top: -80px;
+  /* align-items: center; */
 
- }
- .product-box{
+}
+ .product-box{  
    color:black;
    margin:auto;
    text-align: center;
    margin-bottom: 20px;
    /* align-items: center; */
    border: 0px solid black;
-   height: 650px;
-   width: 500px;
+   height: 550px;
+   width: 450px;
    border-radius:10px;
+   padding: 40px 40px 0px 0px;
    overflow: hidden;
    cursor: pointer;
    transition: 0.2s;
@@ -45,7 +46,7 @@
  }
 
  .product-box:hover{
-  box-shadow: 100px;
+  box-shadow: 200px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
   transform: translateY(-0.5%);
   /* box-shadow: 0 4rem 8rem rgba(211, 27, 27, 0.05); */
@@ -60,8 +61,8 @@
  img.product-index{
    color:black;
    margin:auto;
-   width: 80%;
-   height: 80%;
+   width: 350px;
+   height: 400px;
    /* object-fit:cover;  */
  }
  .store-box{
@@ -103,20 +104,20 @@
 
 }
 .pagenum1{
-  margin-left:60px; 
-  margin-top:-180px;
+  /* margin-left:60px;  */
+  /* margin-top:-180px; */
 
 }
   .apple_pagination {
     border-radius: 10px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     background: #b5b5af;
     border: 1px solid #e5e5e5;
-    text-align: center;
+    /* text-align: center; */
     padding: 1em;
     cursor: default;
-    width: 250px;
-    margin-left: 1040px;
+    width: 300px;
+    /* margin-left: 1040px; */
     height: fit-content;
     color:black;
     
@@ -168,7 +169,7 @@
   
   .left {
     left: 0;
-    width:10%;
+    width:8%;
     background-color:#212429;
   }
   
@@ -184,4 +185,15 @@
     transform: translate(-50%, -50%);
     text-align: center;
   }
+
+
+  #design-outline
+  {
+    /* width: 500px; */
+    /* height: 300px; */
+    display: flex;
+    justify-content: space-around;
+    margin-top : 30px;
+  }
+
 

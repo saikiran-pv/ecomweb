@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  CATEGORIES = %i[women men kids accessories]
+  
   belongs_to :category
   belongs_to :store
 
@@ -10,10 +12,10 @@ class Product < ApplicationRecord
     with: %r{\.(gif|jpg|png)\Z}i,
     message: 'must be a URL for GIF, JPG or PNG image.'
     }
+  validates :code, numericality: { only_integer: true}, presence: true, uniqueness: true, length: { is: 5 }
    
+
   def to_param
     code
   end
-
-  
 end

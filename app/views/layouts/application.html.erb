@@ -25,63 +25,55 @@
             <span class="navbar-toggler-icon"></span>
         </a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav ">	
+            <ul class="navbar-nav ">
+              <% if current_user %>	
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:3000/carts">Carts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:3000/orders">Orders</a>
                 </li> &nbsp;&nbsp;
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><%= link_to image_tag("user-icon.jpg", width:30, :class => "style_image" )%></a>
-                </li>&nbsp;
-                <ul class ="nav navbar-nav ms-auto">
-                    <a href ="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"></a>
-                    <li class="nav-item dropdown">
-                        <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#" class="dropdown-item">Log in</a>
-                        <a href="#" class="dropdown-item">Register</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Logout</a>
-                        </div>
-                    </li>   
-                </ul>	
+              <%end%>
+              <li class="nav-item">
+                  <a class="nav-link" href="#"><%= link_to image_tag("user-icon.jpg", width:30, :class => "style_image" )%></a>
+              </li>&nbsp;
+              <ul class ="nav navbar-nav ms-auto">
+                  <a href ="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"></a>
+                  <li class="nav-item dropdown">
+                      <div class="dropdown-menu dropdown-menu-end">
+                        <% unless current_user %>
+                          <a class="dropdown-item" style="color:white;"><%= link_to "Log in", new_user_session_path, class:"btn btn-light" %></a>
+                          <a class="dropdown-item" style="color:white;"><%= link_to "Register", new_user_registration_path, class:"btn btn-light" %></a>
+                        <% else %> 
+                          <a class="dropdown-item" style="color:white;"><%= link_to "Edit Profile", edit_user_registration_path, class:"btn btn-light" %></a>
+                          <a class="dropdown-item" style="color:white;"><%= button_to "Log out", destroy_user_session_path, :method => :delete, class:"btn btn-light" %></a>
+                        <% end %>
+                      </div>
+                  </li>   
+              </ul>	
             </ul>
           </div>
         </div>
     </nav>
-<!--
-    <div class="menu">
-        <ul class="nav" style="display: flex;flex-direction: column;">
-            <li><a href="#">Home </a></li><br>
-            <li><a><%= link_to "Our Stores",stores_path%></a><br>
-            <li><a><%= link_to "Explore products",all_products_path%></a><br>
-            <li><a href="#">About</a></li><br>
-            <li><a href="#">Contact</a></li><br> 
-            <li><a href=""></a></li><br>
-        </ul>
-    </div>
--->
-  <div class="sidemenubar">
-    <div class="split left">
+    <div class="sidemenubar">
+     <div class="split left">
       <div class="centered">
         <ul style="display: flex;flex-direction: column;">
-          
-          <li><a style="color:white;"><%= link_to "Home",home_user_path, class:"btn btn-dark"%></a></li><br>
-          <li><a style="color:white;"><%= link_to "Stores",stores_path, class:"btn btn-dark"%></a><br></li><br>
-          <li><a style="color:white;"><%= link_to "Explore",all_products_path, class:"btn btn-dark"%></a></li><br>
-          <li><a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Women">Women</a></li><br>
-          <li><a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Men">Men</a></li><br>
-          <li><a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Kids">Kids</a></li><br> 
-          <li><a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Accessories">Accessories</a></li><br>
-          <li><a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Home%20&%20Decor">Home and Decor</a></li><br>
-          
+          <a style="color:white;"><%= link_to "Home",home_user_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Stores",stores_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Explore",all_products_path, class:"btn btn-dark"%></a><br>
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Women">Women</a><br>
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Men">Men</a><br>
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Kids">Kids</a><br> 
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Accessories">Accessories</a><br>
         </ul>
       </div>
+     </div>
     </div>
-  </div>
 
    <div class="split right">
+       <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
        <%= yield %> 
   </div>
   

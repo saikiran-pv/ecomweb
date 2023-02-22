@@ -1,9 +1,12 @@
-
 <br><br>
+
+<div id="design-outline">
+
 <div class="apple_pagination">
-  <div class="page_info">
+
+  
     <%= page_entries_info @products %>
-  </div>
+  
   
     <%= will_paginate @products, :container => false %><br>
 
@@ -11,15 +14,29 @@
       <%= form.number_field :per_page %>
       <%= form.submit %>
     <% end %> 
-</div><br>
+</div>
 
 <div class="pagenum1">
   <%= form_with url: all_products_path , method: :get do |form| %>
     <%= form.label :sort_by %>
-    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low"]%>
+    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low", "Highest rating"] %>
     <%= form.submit %>
-  <% end %>
-</div><br>
+  <% end %><br>
+
+
+</div>
+
+<div>
+<%= form_with url: all_products_path, method: :get do |form|%>
+   <span id="checkbox"> <% Product::CATEGORIES.each do |key|%>
+             <%= form.check_box :categories, {multiple: true}, key, nil%>
+             <%= form.label key%>
+    <%end%></span>
+    <%= form.submit "Filter by"%>
+<% end %>
+</div>
+
+</div>
  
 <div class="row">
   <% @products.each do |product|%>
@@ -41,3 +58,6 @@
 </div>
 
 <%= javascript_include_tag "show"%>
+<%= javascript_include_tag "Changefun"%>
+
+ 

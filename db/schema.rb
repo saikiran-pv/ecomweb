@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_18_171936) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_22_064524) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -65,13 +65,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_18_171936) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.integer "role_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["role_id"], name: "index_users_on_role_id"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "address"
+    t.integer "phone_number"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "carts", "users"
   add_foreign_key "orders", "users"
-  add_foreign_key "users", "roles"
 end

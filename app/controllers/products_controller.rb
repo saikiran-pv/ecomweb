@@ -18,13 +18,20 @@ class ProductsController < ApplicationController
       @products=Product.order(price: :desc).paginate(:page => params[:page], per_page: params[:per_page]) 
     elsif params[:sort_price]  == "Relevance"  
       @products=Product.paginate(:page => params[:page], per_page: params[:per_page]) 
+    elsif params[:sort_price] == "Highest rating"
+      @products=Product.order(rating: :desc).paginate(:page => params[:page], per_page: params[:per_page])
     end
   end
 
   def show
-    # @store=Store.find(params[:store_id]) if params[:store_id]
+    @store=Store.find(params[:store_id]) if params[:store_id]
     @product = Product.find_by(code: params[:code])
   end
+
+  # def category
+  #   @category = Category.find(params[:category_id])
+  #   if @category.product.present?
+  # end
 
   def new
     @product = Product.new
