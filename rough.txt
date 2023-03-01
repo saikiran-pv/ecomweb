@@ -1,0 +1,42 @@
+
+
+1) Product should be displayed when clicked anywhere in the box
+2) when hovered the product box should get box shadow around box
+3) in nav bar the dropdown arrow should be to the right of profile icon
+4) store -images
+5) store show styling
+6) admin/ prefix routes
+7) side menu with categories 
+
+
+
+
+1) per_page params allowed by user 
+2) remove our stores option from left menu
+3) edit an destroy shouldnot be in user portal
+4) add hamburger to the leftside menu
+5)pagination styling  -to be added at top and bottom
+https://www.railscarma.com/blog/technical-articles/pagination-in-rails-with-the-will_paginate-gem/#:~:text=Pagination%20which%20is%20a%20really,and%20other%20Ruby%20frameworks)%20effortless.
+
+6) implement filters 
+7) remove save button in sort option 
+8)add categories to products for filtering 
+9)Add validations while saving products and all models
+10) write styles seperately in assets
+11)indentation (2 spaces)and coding standards 
+12) cart_controller 
+13)product code implementation
+14)add flashes
+15) reusability of code: before action
+16) specs 
+
+
+
+
+
+1) per_page params (per page 10, 20 in dropdown) pre defined values 
+2) categories in filter by 
+3) create scope for routes based on admin, staff and store -admin pages
+4) add mandatory fields * in register form
+5) flash message css 
+6) specs 

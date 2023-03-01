@@ -1,10 +1,9 @@
-<br><br>
+
 <h2 class="text-center">Sign up</h2>
 
 <div class="row py-2">
  <div class= "col-lg-4 mx-auto">
  
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -14,22 +13,34 @@
   </div>
 
    <div class="field mt-3">
-    <%= f.label :phone_number %><br />
+    <%= f.label :phone_number do %>
+     Phone number<span class="required" style="color:red;">*</span>
+    <% end %><br />
     <%= f.telephone_field :phone_number, autofocus: true, autocomplete: "phone_number", :required =>true, class:"form-control py-2"  %>
   </div>
 
    <div class="field mt-3">
     <%= f.label :address %><br />
     <%= f.text_area :address, autofocus: true, autocomplete: "address", :required =>true, class:"form-control py-2"  %>
+
+    <div class="field mt-3" id="add_address" style="display:none;">
+      <%= f.label :additional_address %><br />
+      <%= f.text_area :additional_address, autofocus: true, autocomplete: "additional_address", :required =>true, class:"form-control py-2" %><br>
+    </div>
+    <%= link_to "Add another Address", "#", id: "add_address_button" %>
   </div>
 
   <div class="field mt-3">
-    <%= f.label :email %><br />
+    <%= f.label :email do %>
+      Email<span class="required" style="color:red;">*</span>
+    <% end %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", :required =>true, class:"form-control py-2"  %>
   </div>
 
   <div class="field mt-3">
-    <%= f.label :password %>
+    <%= f.label :password do %>
+      Password<span class="required" style="color:red;">*</span>
+    <% end %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
@@ -49,4 +60,27 @@
 <%= render "devise/shared/links"%>
 
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var roleField = document.getElementById("user_role");
+    var storeNameField = document.getElementById("store-name-field");
+    
+    roleField.addEventListener("change", function() {
+      if (roleField.value === "store_admin") {
+        storeNameField.style.display = "block";
+      } else {
+        storeNameField.style.display = "none";
+      }
+    });
+  });
+</script>
 
+
+<script>
+  $(document).ready(function() {
+    $('#add_address_button').click(function(e) {
+      e.preventDefault();
+      $('#add_address').before('<label>Additional Address</label><input type="text" name="user[additional_address]" id="user_additional_address">');
+    });
+  });
+</script>

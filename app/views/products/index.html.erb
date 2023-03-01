@@ -53,6 +53,8 @@
                       <span>&#11088;</span><%= product.rating%><br>
                       
                       | <%= link_to "", product_path(code: product.code)%> |
+                      <%= button_to "Add to cart", line_items_path(:product_id => product.id), class: "btn btn-success" %>
+
                       
                    </li>
                 </ul>

@@ -13,60 +13,61 @@
       <% end %>
 
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" class="field mt-3">
         <%= form.label :product_name, style: "display: block" %>
-        <%= form.text_field :product_name %>
+        <%= form.text_field :product_name , autofocus: true, autocomplete: "product_name", :required =>true, class:"form-control py-2"  %>
       </div>
  
       <div class="col-md-4">
         <%= form.label :description, style: "display: block" %>
-        <%= form.text_area :description %>
+        <%= form.text_area :description, autofocus: true, autocomplete: "description", :required =>true, class:"form-control py-2"  %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4">
         <%= form.label :price, style: "display: block" %>
-        <%= form.number_field :price %>
+        <%= form.number_field :price , autofocus: true, autocomplete: "price", :required =>true, class:"form-control py-2" %>
       </div>
 
       <div class="col-md-4">
         <%= form.label :rating, style:"display: block"%>
-        <%= form.number_field :rating , step:0.01%>
+        <%= form.number_field :rating , step:0.01, autofocus: true, autocomplete: "rating", :required =>true, class:"form-control py-2" %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4">
         <%= form.label :category, style: "display: block"  %>
-        <%= select_tag "category_id", options_from_collection_for_select(Category.all, "category_name", "category_name") %>
+        <%= select_tag "category_id", options_from_collection_for_select(Category.all, "category_name", "category_name"), autofocus: true, autocomplete: "category", :required =>true, class:"form-control py-2"  %>
       </div>
       <div class="col-md-4">
         <%= form.label :store, style: "display: block"  %>
-        <%= select_tag "store_id", options_from_collection_for_select(Store.all, "store_name", "store_name") %>
+        <%= select_tag "store_id", options_from_collection_for_select(Store.all, "store_name", "store_name"), autofocus: true, autocomplete: "store", :required =>true, class:"form-control py-2"  %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4">
         <%= form.label :code, style: "display:block"%>
-        <%= form.number_field :code %>
+        <%= form.number_field :code, autofocus: true, autocomplete: "code", :required =>true, class:"form-control py-2"  %>
       </div>
 
       <div class="col-md-4">
         <%= form.label :discount, style: "display: block" %>
-        <%= form.number_field :discount %>
+        <%= form.number_field :discount, autofocus: true, autocomplete: "discount", :required =>true, class:"form-control py-2"  %>
       </div>
 
+    </div>
+    <div class="row">
       <div class="col-md-4">
         <%= form.label :visibility, style: "display: block" %>
         <%= form.check_box :visibility %>
       </div>
-    </div>
-
-      <div>
+    
+      <div class="col-md-4">
         <%= form.label :image, style: "display: block" %>
-        <%= form.file_field :image %>
+        <%= form.file_field :image, autofocus: true, :required =>true, class:"form-control py-2"  %>
         <!--
         <% if @product.image %>
           <%= form.check_box :remove_image%>
@@ -76,13 +77,13 @@
       </div>
 
       <% if product.image.present?%>
-      <div>
-        <%= image_tag product.image.url%>
-      </div>
+        <div>
+          <%= image_tag product.image%>
+        </div>
       <% end %>
-
-      <div>
-        <%= form.submit%>
+    </div>
+      <div >
+        <%= form.submit class: "btn btn-success"%>
       </div>
     <% end %>
 </div>

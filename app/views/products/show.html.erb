@@ -8,23 +8,36 @@
       </div>
 
       <div class="rightx" >
-          <ul>
-            <strong><%= @product.product_name%></strong><br>by <strong><%= @product.store.store_name%></strong><br>
-            Rs.<%= @product.price%><br>
-            <%= @product.description%><br>
-            <strong><%= @product.category.category_name%>'s Category</strong><br>
-            <span>&#11088;</span><%= @product.rating%>
-          </ul>
+        <ul>
+          <strong><%= @product.product_name%></strong><br>by <strong><%= @product.store.store_name%></strong><br>
+          Rs.<%= @product.price%><br>
+          <%= @product.description%><br>
+          <strong><%= @product.category.category_name%>'s Category</strong><br>
+          <span>&#11088;</span><%= @product.rating%>
+        </ul>
 
-        <%= link_to "Edit this product", edit_product_path %> |
+        <!--<%= button_to "Add to cart", line_items_path(:code => @product.code), class: "btn btn-success" %>-->
 
-        <% if @store %>
-          <%= link_to "Back to store",  products_path%><br><br>
-        <% else %>
-          <%= link_to "Back to all products", all_products_path %>
+
+        <div id="add-cart">
+        <div><%= button_to "+", line_item_add_path(:line_item_id), method: :post, class: "btn btn-success" %> </div>
+        <%= button_to "Add to cart", line_items_path(:code => @product.code), class: "btn btn-success" %>
+        <!--<div><%= link_to "Remove item", line_item_path(:line_item_id), method: :delete %></div>-->
+        <div><%= button_to "-", line_item_reduce_path(:line_item_id), method: :post, class: "btn btn-success" %> </div>
+        </div>
+
+
+        <% if current_user.super_admin? %>
+          <%= link_to "Edit this product", edit_product_path %> |
+
+          <% if @store %>
+            <%= link_to "Back to store",  products_path%><br><br>
+          <% else %>
+            <%= link_to "Back to all products", all_products_path %>
+          <% end %>
+
+          <%= button_to "Destroy this product", product_path(code: @product.code), method: :delete %>
         <% end %>
-
-        <%= button_to "Destroy this product", product_path(code: @product.code), method: :delete %>
 
       </div>
 </div>

@@ -1,17 +1,19 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
-  # before_action :set_store, only: %i[ new edit create update destroy]
-  # before_action :set_category, only: %i[ new edit create update destroy]
+  skip_before_action :authenticate_user!, only: [:all_products, :record, :home, :show]
+  before_action :set_product, only: %i[ show update destroy ]
+  
+  def home
+    render :template => "home"
+  end
 
   def index
     @products=Product.all
-    @products=@products.paginate(:page => 1, :per_page => params[:per_page])
-    # @products=@products.paginate(:page => params[:page])
+    @products=@products.paginate(:page =>  params[:page], :per_page => params[:per_page])
   end
 
   def all_products
     @products= Product.all
-    @products=@products.paginate(:page => 1, :per_page => params[:per_page])
+    @products=@products.paginate(:page =>  params[:page], :per_page => params[:per_page])
     if params[:sort_price] == "Price - low to high"
       @products=Product.order(price: :asc).paginate(:page => params[:page], per_page: params[:per_page]) 
     elsif params[:sort_price]  == "Price - high to low"
@@ -28,10 +30,10 @@ class ProductsController < ApplicationController
     @product = Product.find_by(code: params[:code])
   end
 
-  # def category
-  #   @category = Category.find(params[:category_id])
-  #   if @category.product.present?
-  # end
+  def record
+    @products=Product.order(rating: :desc).paginate(:page => 1, per_page: 5)
+    render :template => "record"
+  end
 
   def new
     @product = Product.new
@@ -49,24 +51,15 @@ class ProductsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
+    @product = Product.find(params[:code])
+    @product.update(product_params)
+    redirect_to products_path
   end
 
   def destroy
+    @product = Product.find(params[:code])
     @product.destroy
-
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to products_path
   end
 
   private

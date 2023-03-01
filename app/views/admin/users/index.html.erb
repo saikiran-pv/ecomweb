@@ -1,0 +1,32 @@
+<h1 class="text-center">Users</h1>
+<a style="color:white;"><%= link_to "Create Store admins/staffs",new_admin_user_path, class:"btn btn-dark"%></a><br>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.phone_number %></td>
+        <td><%= user.email %></td>
+        <td><%= user.address %></td>
+        <td><%= user.role %></td>
+        <td style="display:flex; flex-direction:row;">
+          <%= link_to "Show", user, class: "btn btn-success" %>
+          <%= link_to "Edit", user, class: "btn btn-primary" %>
+          <%= link_to "Delete", user, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Add a user", new_user_registration_path %>

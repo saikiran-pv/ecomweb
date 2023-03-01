@@ -1,0 +1,51 @@
+<div class="mybox">
+      <div class="leftx">
+        <% if @product.image?%>
+          <%= image_tag @product.image.url, class:"product-show"%>
+          <%else %>
+          <%= render plain: "OK" %>
+        <% end %>
+      </div>
+
+      <div class="rightx" >
+        <ul>
+          <strong><%= @product.product_name%></strong><br>by <strong><%= @product.store.store_name%></strong><br>
+          Rs.<%= @product.price%><br>
+          <%= @product.description%><br>
+          <strong><%= @product.category.category_name%>'s Category</strong><br>
+          <span>&#11088;</span><%= @product.rating%>
+        </ul>
+
+        <% if current_user.super_admin? %>
+          <%= link_to "Edit this product", edit_product_path %> |
+
+          <% if @store %>
+            <%= link_to "Back to store",  products_path%><br><br>
+          <% else %>
+            <%= link_to "Back to all products", all_products_path %>
+          <% end %>
+
+          <%= button_to "Destroy this product", product_path(code: @product.code), method: :delete %>
+        <% end %>
+
+      </div>
+</div>
+
+<style>
+  .leftx{
+    position: absolute;
+  }
+  .rightx{
+    position:absolute;
+    float:right;
+    margin-left: 850px;
+  }
+  .mybox{
+    align-content: center;
+    position:relative;
+    top:175px;
+    display:block;
+    text-align: center;
+  }
+</style>
+

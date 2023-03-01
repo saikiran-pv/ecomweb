@@ -1,0 +1,25 @@
+<h2 class="text-center"> Top 5 products
+</h2>
+<div class="row">
+  <% @products.each do |product|%>
+      <div class="col-md-2" onclick="show(this)">
+
+        <div class="record-box" id="record-box">
+            <%=image_tag product.image.url, class:"record-index" if product.image?%>
+              <ul>
+                    <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
+                        Rs.<%= product.price%><br>
+                        <span>&#11088;</span><%= product.rating%><br>
+                    
+                        <%= link_to "", product_path(code: product.code)%>
+                    
+              </ul>
+        </div>
+      </div>
+  <%end%>
+</div>
+
+<%= javascript_include_tag "show"%>
+
+
+ 

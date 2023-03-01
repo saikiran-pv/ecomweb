@@ -1,14 +1,12 @@
-<p style="color: green"><%= notice %></p>
+<h2>All Orders</h2>
 
-<h1>Orders</h1>
+<% @orders.each do |order| %>
 
-<div id="orders">
-  <% @orders.each do |order| %>
-    <%= render order %>
-    <p>
-      <%= link_to "Show this order", order %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New order", new_order_path %>
+Hi <%= current_user.name %>
+  <p>Line Items: </p>
+  <ul>
+    <% order.line_items.each do |item| %>
+    <li><%= item.quantity %> x <%= item.product.product_name %></li>
+    <% end %>
+  </ul>
+<% end %>

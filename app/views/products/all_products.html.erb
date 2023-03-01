@@ -2,25 +2,20 @@
 
 <div id="design-outline">
 
-<div class="apple_pagination">
-
-  
-    <%= page_entries_info @products %>
-  
-  
-    <%= will_paginate @products, :container => false %><br>
+<div class="apple_pagination" >
+    <%= page_entries_info @products %><br>
+    <%= will_paginate @products, :container => false %>
 
     <%= form_with url: all_products_path , method: :get do |form| %>
-      <%= form.number_field :per_page %>
+      <%= form.select :per_page,[1,2,3,4,5,10,20,30],{}, {class: 'form-control'} %>
       <%= form.submit %>
     <% end %> 
 </div>
 
 <div class="pagenum1">
-  <%= form_with url: all_products_path , method: :get do |form| %>
+  <%= form_with url: all_products_path , method: :get, remote: true, id: 'sort-form' do |form| %>
     <%= form.label :sort_by %>
-    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low", "Highest rating"] %>
-    <%= form.submit %>
+    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low", "Highest rating"],{}, {class: 'form-control'} %>
   <% end %><br>
 
 
@@ -38,7 +33,7 @@
 
 </div>
  
-<div class="row">
+<div class="row" style="margin-bottom:80px;">
   <% @products.each do |product|%>
       <div class="col-md-4" onclick="show(this)">
 
@@ -50,7 +45,7 @@
                         <span>&#11088;</span><%= product.rating%><br>
                     
                         <%= link_to "", product_path(code: product.code)%>
-                    
+                        <%= button_to "Add to cart", line_items_path(:product_id => product.id), class: "btn btn-success" %>
               </ul>
         </div>
       </div>
@@ -60,4 +55,10 @@
 <%= javascript_include_tag "show"%>
 <%= javascript_include_tag "Changefun"%>
 
- 
+ <script>
+$(document).on('turbolinks:load', function() {
+  $('#sort-form select').on('change', function() {
+    Rails.fire($('#sort-form')[0], 'submit');
+  });
+});
+</script>

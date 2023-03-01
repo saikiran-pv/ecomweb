@@ -6,7 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "super_admin", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-9XljoJifQPe+kvRlqnTMOrTnssZd7fZJfn1/C+3q23cjJl9X0y/9lNvD12wuNlE6N60rBY0r0KQ2HnbUW+17Qg==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
@@ -26,14 +28,20 @@
         </a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav ">
-              <% if current_user %>	
+            <% if current_user %>
+              <% unless current_user.super_admin? %>	
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/carts">Carts</a>
+                    <a class="nav-link"><%= link_to "My cart", cart_path(current_user.id), class: "btn btn-dark", style:"margin-top:-17px;"%></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/orders">Orders</a>
+                    <a class="nav-link"><%= link_to "My Orders", orders_path(current_user.id), class: "btn btn-dark", style:"margin-top:-17px;"%></a>
                 </li> &nbsp;&nbsp;
-              <%end%>
+              <% else %>
+                 <li class="nav-item">
+                    <a class="nav-link"><%= link_to "Admin portal", super_admin_dashboard_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
+                </li>
+              <% end %>
+            <% end %>
               <li class="nav-item">
                   <a class="nav-link" href="#"><%= link_to image_tag("user-icon.jpg", width:30, :class => "style_image" )%></a>
               </li>&nbsp;
@@ -71,10 +79,14 @@
      </div>
     </div>
 
-   <div class="split right">
-       <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-       <%= yield %> 
+   <div class="split right" style="margin-top:60px;">
+    <% flash.each do |type, message| %>
+      <div style="top: -5px;width:1270px;margin-left: 6%; position:absolute;z-index:10; text-align: center" id="flash" class="alert <%= bootstrap_class_for(type) %> alert-dismissible" role="alert">
+        <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="float:right"></button>
+      </div>    
+    <% end %>
+    <%= yield %> 
   </div>
   
   </body>
