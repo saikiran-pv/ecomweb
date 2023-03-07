@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_26_091827) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_06_134957) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_091827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "total_price", precision: 10, scale: 2
+    t.string "status"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -68,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_091827) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role_number"
   end
 
   create_table "stores", force: :cascade do |t|
@@ -87,9 +89,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_091827) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "address"
-    t.integer "phone_number"
+    t.string "phone_number"
+    t.string "role", default: "user"
+    t.integer "store_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["store_id"], name: "index_users_on_store_id"
   end
 
   add_foreign_key "carts", "users"

@@ -43,13 +43,27 @@
           </div>
         </div>
     </nav>
-    <div style="margin-top:150px;">
-      <% flash.each do |type, message| %>
-          <div style="top: -5px;width:1270px;margin-left: 6%; position:absolute;z-index:10; text-align: center" id="flash" class="alert <%= bootstrap_class_for(type) %> alert-dismissible" role="alert">
-            <%= message %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="float:right"></button>
-          </div>    
-        <% end %>
+    <div class="sidebar">
+     <div class="splat left-a">
+      <div class="centered">
+        <ul style="display: flex;flex-direction: column;">
+          <a style="color:white;"><%= link_to "Store admins/staffs", admin_users_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Stores",admin_stores_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Categories",admin_categories_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Products",admin_products_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Orders",admin_products_path, class:"btn btn-dark"%></a><br>
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/home">Login as user</a><br>
+        </ul>
+      </div>
+     </div>
+    </div>
+   <div class="splat right-a" style="margin-top:60px;">
+    <% flash.each do |type, message| %>
+      <div style="top: -5px;width:1270px;margin-left: 6%; position:absolute;z-index:10; text-align: center" id="flash" class="alert <%= bootstrap_class_for(type) %> alert-dismissible" role="alert">
+        <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="float:right"></button>
+      </div>    
+    <% end %>
         <%= yield %> 
     </div>
   </body>

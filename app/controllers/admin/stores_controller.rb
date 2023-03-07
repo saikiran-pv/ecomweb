@@ -1,10 +1,13 @@
 class Admin::StoresController < ApplicationController
-  layout "super_admin_layout"
   before_action :set_store, only: %i[ show edit update destroy ]
 
   # GET /stores or /stores.json
   def index
-    @stores = Store.all
+    if current_user.store_admin?
+      @stores = Store.where(:id => current_user.store_id)
+    elsif current_user.super_admin? || current_user.staff?
+      @stores = Store.all
+    end
   end
 
   # GET /stores/1 or /stores/1.json
@@ -28,7 +31,7 @@ class Admin::StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to store_url(@store), notice: "Store was successfully created." }
+        format.html { redirect_to admin_stores_url(@store), notice: "Store was successfully created." }
         format.json { render :show, status: :created, location: @store }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -70,6 +73,6 @@ class Admin::StoresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def store_params
-      params.require(:store).permit(:store_name, :description)
+      params.permit(:store_name, :description)
     end
 end

@@ -1,0 +1,7 @@
+<% if current_user.super_admin? %>
+    <h1> Hi <%= current_user.role %></h1>
+<% elsif current_user.store_admin?%>
+       <h1> Hi <%= current_user.role %></h1>
+<% elsif current_user.staff?%>
+    <h1> Hi <%= current_user.role %></h1>
+<% end %>

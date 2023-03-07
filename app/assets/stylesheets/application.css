@@ -16,6 +16,10 @@
 
  /* @import "bootstrap-sprockets";
  @import "bootstrap"; */
+ 
+ .field_with_errors {
+  border: 2px solid red;
+}
 
  img.product-show {
   color:black;
@@ -34,7 +38,7 @@
    margin-bottom: 20px;
    /* align-items: center; */
    border: 0px solid black;
-   height: 580px;
+   height: 630px;
    width: 450px;
    border-radius:10px;
    padding: 40px 40px 0px 0px;

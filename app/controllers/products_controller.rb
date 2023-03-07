@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   
   def home
     render :template => "home"
+    # render layout: "simple_layout"
   end
 
   def index
@@ -12,6 +13,7 @@ class ProductsController < ApplicationController
   end
 
   def all_products
+    # @line_item = LineItem.find(params[:line_item_id])
     @products= Product.all
     @products=@products.paginate(:page =>  params[:page], :per_page => params[:per_page])
     if params[:sort_price] == "Price - low to high"
@@ -22,6 +24,10 @@ class ProductsController < ApplicationController
       @products=Product.paginate(:page => params[:page], per_page: params[:per_page]) 
     elsif params[:sort_price] == "Highest rating"
       @products=Product.order(rating: :desc).paginate(:page => params[:page], per_page: params[:per_page])
+    end
+    respond_to do |format|
+      format.json { render json: @products}
+      format.html 
     end
   end
 

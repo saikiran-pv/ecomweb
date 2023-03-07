@@ -81,4 +81,14 @@ body {
   .table tr:hover {
     background-color: #e9ecef;
   }
-  
+  .result:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  .result div {
+    float: left;
+  }
+  .result div:last-child {
+    float: right;
+  }

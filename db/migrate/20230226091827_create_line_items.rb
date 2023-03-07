@@ -9,5 +9,6 @@ class CreateLineItems < ActiveRecord::Migration[7.0]
       t.timestamps
     end
     add_column :orders, :total_price, :decimal, precision: 10, scale: 2
+
   end
 end

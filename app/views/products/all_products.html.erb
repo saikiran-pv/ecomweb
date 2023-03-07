@@ -6,16 +6,17 @@
     <%= page_entries_info @products %><br>
     <%= will_paginate @products, :container => false %>
 
-    <%= form_with url: all_products_path , method: :get do |form| %>
-      <%= form.select :per_page,[1,2,3,4,5,10,20,30],{}, {class: 'form-control'} %>
+    <%= form_with url: all_products_path ,id: 'pages_filter' ,class: 'filter', method: :get, remote: true do |form| %>
+      <%= form.select :per_page,[1,2,3,4,5,10,20,30],{}, {class: 'form-control', :onchange=>"handleChange('pages_filter')"}  %>
       <%= form.submit %>
     <% end %> 
 </div>
 
 <div class="pagenum1">
-  <%= form_with url: all_products_path , method: :get, remote: true, id: 'sort-form' do |form| %>
+  <%= form_with url: all_products_path ,id: 'price_filter', method: :get, remote: true do |form| %>
     <%= form.label :sort_by %>
-    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low", "Highest rating"],{}, {class: 'form-control'} %>
+    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low", "Highest rating"],{}, {class: 'form-control', :onchange=>"handleChange('price_filter')"} %>
+    <%= form.submit "save"%>
   <% end %><br>
 
 
@@ -45,7 +46,7 @@
                         <span>&#11088;</span><%= product.rating%><br>
                     
                         <%= link_to "", product_path(code: product.code)%>
-                        <%= button_to "Add to cart", line_items_path(:product_id => product.id), class: "btn btn-success" %>
+                        <%= button_to "Add to cart", add_to_cart_path(:product_id => product.id), class: "btn btn-success" %>
               </ul>
         </div>
       </div>
@@ -55,10 +56,27 @@
 <%= javascript_include_tag "show"%>
 <%= javascript_include_tag "Changefun"%>
 
- <script>
-$(document).on('turbolinks:load', function() {
-  $('#sort-form select').on('change', function() {
-    Rails.fire($('#sort-form')[0], 'submit');
-  });
-});
+<script>
+function handleChange(filter){
+  console.log(filter)
+  $(document).ready(function(){
+    var review = $('#review');
+    var form = $(`#${filter}`);
+    console.log(form)
+    var actionUrl = form.attr('action');
+    console.log(actionUrl)
+    $.ajax({
+      url: `${actionUrl}.json`,
+        type: 'GET',
+        data: form.serialize()
+      })
+    .done( function(data){
+      console.log(data)
+      })
+      .fail( function(error){
+        alert("somthing went wrong! try again");
+        });
+    });
+}
 </script>
+

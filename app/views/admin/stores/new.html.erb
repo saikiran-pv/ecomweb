@@ -1,0 +1,39 @@
+<h1 class="text-center">New store</h1>
+
+<div class="row py-2">
+ <div class= "col-lg-4 mx-auto">
+<%= form_with url: admin_stores_path do |form| %>
+  <% if @store.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@store.errors.count, "error") %> prohibited this store from being saved:</h2>
+
+      <ul>
+        <% @store.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field mt-3">
+    <%= form.label :store_name, style: "display: block" %>
+    <%= form.text_field :store_name, autofocus: true, autocomplete: "name", :required =>true, class:"form-control py-2" %>
+  </div>
+
+  <div class="field mt-3">
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_field :description, autofocus: true, autocomplete: "name", :required =>true, class:"form-control py-2" %>
+  </div>
+
+  <div class="actions mt-4 mb-5">
+    <%= form.submit  "Create", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow"  %>
+  </div>
+<% end %>
+
+
+
+<div>
+  <%= link_to "Back to stores", admin_stores_path %>
+</div>
+
+

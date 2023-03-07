@@ -16,29 +16,29 @@
           <span>&#11088;</span><%= @product.rating%>
         </ul>
 
-        <!--<%= button_to "Add to cart", line_items_path(:code => @product.code), class: "btn btn-success" %>-->
-
-
-        <div id="add-cart">
-        <div><%= button_to "+", line_item_add_path(:line_item_id), method: :post, class: "btn btn-success" %> </div>
-        <%= button_to "Add to cart", line_items_path(:code => @product.code), class: "btn btn-success" %>
-        <!--<div><%= link_to "Remove item", line_item_path(:line_item_id), method: :delete %></div>-->
-        <div><%= button_to "-", line_item_reduce_path(:line_item_id), method: :post, class: "btn btn-success" %> </div>
+        <div class="btn-group mr-2" role="group" >
+          <%= form_with url: carts_add_to_cart_path, method: :post do |form|%>
+            <%= form.hidden_field :product_id, value: @product.id %>
+            <%= button_tag "-", type: 'button', onclick: "decrement()", class: 'btn btn-default'%>
+            <%= form.number_field :quantity, min: 0, max: 10, value:1 %>
+            <%= button_tag "+", type: 'button', onclick: "increment()", class: 'btn btn-default'%><br>
+            <%= form.submit 'Add to Cart', class: "btn btn-success" %>
+          <% end %>
         </div>
 
+        <% if current_user%>
+          <% if current_user.super_admin? %>
+            <%= link_to "Edit this product", edit_product_path %> |
 
-        <% if current_user.super_admin? %>
-          <%= link_to "Edit this product", edit_product_path %> |
+            <% if @store %>
+              <%= link_to "Back to store",  products_path%><br><br>
+            <% else %>
+              <%= link_to "Back to all products", all_products_path %>
+            <% end %>
 
-          <% if @store %>
-            <%= link_to "Back to store",  products_path%><br><br>
-          <% else %>
-            <%= link_to "Back to all products", all_products_path %>
+            <%= button_to "Destroy this product", product_path(code: @product.code), method: :delete %>
           <% end %>
-
-          <%= button_to "Destroy this product", product_path(code: @product.code), method: :delete %>
-        <% end %>
-
+        <%end%>
       </div>
 </div>
 
@@ -60,3 +60,12 @@
   }
 </style>
 
+<script>
+function increment() {
+  // debugger;
+  document.getElementById('quantity').stepUp();
+}
+function decrement() {
+  document.getElementById('quantity').stepDown();
+}
+</script>

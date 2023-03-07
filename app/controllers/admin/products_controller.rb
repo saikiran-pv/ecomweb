@@ -1,5 +1,4 @@
 class Admin::ProductsController < ApplicationController
-  layout "super_admin_layout"
   skip_before_action :authenticate_user!, only: [:all_products, :record, :home, :show]
   before_action :set_product, only: %i[ show update destroy ]
   
@@ -8,21 +7,11 @@ class Admin::ProductsController < ApplicationController
   end
 
   def index
-    @products=Product.all
-    @products=@products.paginate(:page =>  params[:page], :per_page => params[:per_page])
-  end
-
-  def all_products
-    @products= Product.all
-    @products=@products.paginate(:page =>  params[:page], :per_page => params[:per_page])
-    if params[:sort_price] == "Price - low to high"
-      @products=Product.order(price: :asc).paginate(:page => params[:page], per_page: params[:per_page]) 
-    elsif params[:sort_price]  == "Price - high to low"
-      @products=Product.order(price: :desc).paginate(:page => params[:page], per_page: params[:per_page]) 
-    elsif params[:sort_price]  == "Relevance"  
-      @products=Product.paginate(:page => params[:page], per_page: params[:per_page]) 
-    elsif params[:sort_price] == "Highest rating"
-      @products=Product.order(rating: :desc).paginate(:page => params[:page], per_page: params[:per_page])
+    if current_user.super_admin? || current_user.staff?
+      @products= Product.all
+    else current_user.store_admin?
+      @store = Store.find(current_user.store_id)
+      @products=@store.products
     end
   end
 
@@ -45,9 +34,10 @@ class Admin::ProductsController < ApplicationController
   end
 
   def create
+    @store = Store.find(current_user.store_id)
     @product = Product.create(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :visibility=> params[:visibility], :image=> params[:image],:rating=> params[:rating],:code=>params[:code])
     if @product.save
-      redirect_to products_path
+      redirect_to admin_products_path, notice: "Added a product successfully"
     end
   end
 
@@ -78,6 +68,6 @@ class Admin::ProductsController < ApplicationController
 
 
     def product_params
-      params.require(:product).permit(:product_name, :price, :description, :discount, :visibility, :image, :rating, :code, :store_id, :category_id)  
+      params.permit(:product_name, :price, :description, :discount, :visibility, :image, :rating, :code, :store_id, :category_id)  
     end
 end

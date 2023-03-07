@@ -1,6 +1,7 @@
   <div class="tothecenter">
   <%= render @store %>
 
+  <% if current_user.super_admin? || current_user.store_admin?%> 
   <div>
     <%= link_to "Edit this store", edit_store_path(@store) %> |
     <%= link_to "Back to stores", stores_path %><br>
@@ -10,20 +11,7 @@
                     turbo_confirm: "Are you sure?"
                   } %>
   </div>
-
-  <style>
-   .tothecenter{
-    align-content: center;
-    position:relative;
-    top:175px;
-    /* top:50px; */
-    display:block;
-  /* margin:auto; */
-  text-align: center;
-  /* margin-top: 250px; */
- }
-  </style>
-
+  <% end %>
 
 <br>
 <%= link_to "Add products to this store" ,new_store_product_path(@store)%>
@@ -36,3 +24,15 @@
 </div>
 </div>
 
+<style>
+  .tothecenter{
+  align-content: center;
+  position:relative;
+  top:175px;
+  /* top:50px; */
+  display:block;
+/* margin:auto; */
+text-align: center;
+/* margin-top: 250px; */
+}
+</style>
