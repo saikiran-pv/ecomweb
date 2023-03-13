@@ -4,8 +4,9 @@
           <%= image_tag @product.image.url, class:"product-show"%>
           <%else %>
           <%= render plain: "OK" %>
-        <% end %>
+        <% end %><br>
       </div>
+
 
       <div class="rightx" >
         <ul>
@@ -17,48 +18,28 @@
         </ul>
 
         <div class="btn-group mr-2" role="group" >
-          <%= form_with url: carts_add_to_cart_path, method: :post do |form|%>
+          <%= form_with url: add_to_cart_path, method: :post do |form|%>
             <%= form.hidden_field :product_id, value: @product.id %>
             <%= button_tag "-", type: 'button', onclick: "decrement()", class: 'btn btn-default'%>
             <%= form.number_field :quantity, min: 0, max: 10, value:1 %>
             <%= button_tag "+", type: 'button', onclick: "increment()", class: 'btn btn-default'%><br>
             <%= form.submit 'Add to Cart', class: "btn btn-success" %>
           <% end %>
+        </div> 
+        <div class="review-box">
+          <h3>Reviews</h3>
+          <% @product.reviews.each do |review| %>
+            <strong>Rating:</strong><%= review.rating %><span>&#11088;</span><br>
+            <strong></strong><%= review.comment %>
+            by<strong><%= review.user.name %></strong><br>
+          <% end %>
+          <%= link_to "Write my review", new_product_review_path(product_code: @product.code)%>
         </div>
 
-        <% if current_user%>
-          <% if current_user.super_admin? %>
-            <%= link_to "Edit this product", edit_product_path %> |
 
-            <% if @store %>
-              <%= link_to "Back to store",  products_path%><br><br>
-            <% else %>
-              <%= link_to "Back to all products", all_products_path %>
-            <% end %>
 
-            <%= button_to "Destroy this product", product_path(code: @product.code), method: :delete %>
-          <% end %>
-        <%end%>
       </div>
 </div>
-
-<style>
-  .leftx{
-    position: absolute;
-  }
-  .rightx{
-    position:absolute;
-    float:right;
-    margin-left: 850px;
-  }
-  .mybox{
-    align-content: center;
-    position:relative;
-    top:175px;
-    display:block;
-    text-align: center;
-  }
-</style>
 
 <script>
 function increment() {
@@ -69,3 +50,4 @@ function decrement() {
   document.getElementById('quantity').stepDown();
 }
 </script>
+

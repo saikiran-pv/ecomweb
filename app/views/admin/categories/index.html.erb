@@ -17,9 +17,9 @@
         <td><%= category.category_name %></td>
         <td><%= category.description %></td>
         <td style="display:flex; flex-direction:row;">
-          <%= link_to "Show", category, class: "btn btn-success" %>
-          <%= link_to "Edit", category, class: "btn btn-primary" %>
-          <%= link_to "Delete", category, class: "btn btn-danger" %>
+          <%= link_to "Show",  admin_category_path(category_name: category.category_name), class: "btn btn-success" %>
+          <%= link_to "Edit", edit_admin_category_path(category_name: category.category_name), class: "btn btn-primary" %>
+          <%= link_to "Delete", admin_category_path(category_name: category.category_name), class: "btn btn-danger" %>
         </td>
       </tr>
     <% end %>

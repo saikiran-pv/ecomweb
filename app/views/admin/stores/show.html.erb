@@ -1,38 +1,43 @@
-  <div class="tothecenter">
-  <%= render @store %>
-
-  <div>
-    <%= link_to "Edit this store", edit_store_path(@store) %> |
-    <%= link_to "Back to stores", stores_path %><br>
-    <br>
-    <%= button_to "Destroy this store", @store, data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %>
-  </div>
-
-  <style>
-   .tothecenter{
-    align-content: center;
-    position:relative;
-    top:175px;
-    /* top:50px; */
-    display:block;
-  /* margin:auto; */
-  text-align: center;
-  /* margin-top: 250px; */
- }
-  </style>
-
-
-<br>
-<%= link_to "Add products to this store" ,new_store_product_path(@store)%>
-
-<br>
-<br>
+<%= @store.store_name %>
 
 <div>
-  <%= link_to "Show products", store_products_path(@store) %>
+  <%= link_to "Edit this store", edit_admin_store_path(@store) %> |
+  <%= link_to "Back to stores", admin_stores_path %><br>
+  <br>
+  <%= button_to "Destroy this store", @store, data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                } %>
+
+
+<br>
+<!-- <%= link_to "Add products to this store" ,new_admin_store_product_path(@store)%> -->
+
+<br>
+<br>
+
+  <div>
+    <%= link_to "Show products", admin_store_products_path(@store) %>
+  </div>
 </div>
+
+<div class="row" style="margin-bottom:80px;">
+  <% @products.each do |product|%>
+      <div class="col-md-4" onclick="show(this)">
+
+        <div class="product-box" id="product-box">
+            <%=image_tag product.image.url, class:"product-index" if product.image?%>
+              <ul>
+                    <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
+                        Rs.<%= product.price%><br>
+                        <span>&#11088;</span><%= product.rating%><br>
+                    
+                        <%= link_to "", admin_product_path(code: product.code)%>
+              </ul>
+        </div>
+      </div>
+  <%end%>
 </div>
+
+<%= javascript_include_tag "show"%>
 

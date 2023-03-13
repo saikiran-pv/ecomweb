@@ -1,0 +1,92 @@
+
+<h2 class="text-center">Edit Store Admin/Staff</h2>
+
+<div class="row py-2">
+ <div class= "col-lg-4 mx-auto">
+ 
+<%= form_with url: admin_users_path do |f| %>
+
+   <div class="field mt-3">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", :required =>true, class:"form-control py-2"  %>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :role %><br />
+    <%= f.select :role, [['Admin', 'super_admin'], ['Store Admin', 'store_admin'], ['Staff','staff']], autofocus: true, autocomplete: "role", :required =>true, class:"form-control py-2"%>    
+    <div id="store-name-field"style="display:none;">
+      <%= f.label :store %>
+      <%= select_tag :store_id, options_from_collection_for_select(Store.all, "id", "store_name"), autofocus: true, :required =>true, class:"form-control py-2"%>
+    </div>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :phone_number do %>
+     Phone number<span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= f.telephone_field :phone_number, autofocus: true, autocomplete: "phone_number", :required =>true, class:"form-control py-2"  %>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :address %><br />
+    <%= f.text_area :address, autofocus: true, autocomplete: "address", :required =>true, class:"form-control py-2"  %>
+
+    <div id="add_address" style="display:none;">
+      <%= f.label :additional_address %><br />
+      <%= f.text_area :additional_address, class:"form-control py-2" %>
+    </div>
+    <%= link_to "Add another Address", "#", id: "add_address_button" %>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :email do %>
+      Email<span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", :required =>true, class:"form-control py-2"  %>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :password do %>
+      Password<span class="required" style="color:red;">*</span>
+    <% end %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", :required =>true, class:"form-control py-2"  %>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :password_confirmation do  %>
+      Password Confirmation<span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", :required =>true, class:"form-control py-2"  %>
+  </div>
+
+  <div class="actions mt-4 mb-5">
+    <%= f.submit "Create", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow" %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var roleField = document.getElementById("role");
+    var storeNameField = document.getElementById("store-name-field");
+    
+    roleField.addEventListener("change", function() {
+      if (roleField.value === "store_admin") {
+        storeNameField.style.display = "block";
+      } else {
+        storeNameField.style.display = "none";
+      }
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function() {
+    $('#add_address_button').click(function(e) {
+      e.preventDefault();
+      $('#add_address').before('<label>Additional Address</label><input type="text" name="user[additional_address]" id="user_additional_address">');
+    });
+  });
+</script>

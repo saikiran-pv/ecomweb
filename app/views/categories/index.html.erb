@@ -1,6 +1,8 @@
 <div class="text-center"  style="margin-top:70px;">
 <h1>Categories</h1>
-<%= link_to "Add new category", new_category_path %>
+<% if current_user.store_admin? || current_user.super_admin? || current_user.staff? %>
+  <%= link_to "Add new category", new_category_path %>
+<% end %>
 </div>
   <div class="row">
     <% @categories.each do |category|%>

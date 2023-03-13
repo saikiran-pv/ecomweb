@@ -4,7 +4,6 @@ class ProductsController < ApplicationController
   
   def home
     render :template => "home"
-    # render layout: "simple_layout"
   end
 
   def index
@@ -13,22 +12,27 @@ class ProductsController < ApplicationController
   end
 
   def all_products
-    # @line_item = LineItem.find(params[:line_item_id])
     @products= Product.all
+    @per_page = params[:per_page] if params[:per_page]
+    @sort_price = params[:sort_price] if params[:sort_price]
     @products=@products.paginate(:page =>  params[:page], :per_page => params[:per_page])
-    if params[:sort_price] == "Price - low to high"
+    if @sort_price == "Price - low to high"
       @products=Product.order(price: :asc).paginate(:page => params[:page], per_page: params[:per_page]) 
-    elsif params[:sort_price]  == "Price - high to low"
+    elsif @sort_price  == "Price - high to low"
       @products=Product.order(price: :desc).paginate(:page => params[:page], per_page: params[:per_page]) 
-    elsif params[:sort_price]  == "Relevance"  
+    elsif @sort_price  == "Relevance"  
       @products=Product.paginate(:page => params[:page], per_page: params[:per_page]) 
-    elsif params[:sort_price] == "Highest rating"
+    elsif @sort_price == "Highest rating"
       @products=Product.order(rating: :desc).paginate(:page => params[:page], per_page: params[:per_page])
     end
-    respond_to do |format|
-      format.json { render json: @products}
-      format.html 
-    end
+
+    @category_id = params[:category_id] if params[:category_id] && params[:category_id].present?
+    @products = @products.where(category_id: @category_id) if @category_id
+
+    # respond_to do |format|
+    #   format.json { render json: @products}
+    #   format.html 
+    # end
   end
 
   def show
@@ -50,7 +54,8 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.create(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :visibility=> params[:visibility], :image=> params[:image],:rating=> params[:rating],:code=>params[:code])
+    binding.pry
+    @product = Product.create(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :visibility=> params[:visibility], :image=> params[:image],:code=>params[:code])
     if @product.save
       redirect_to products_path
     end
@@ -80,7 +85,6 @@ class ProductsController < ApplicationController
     def set_category
       @category = Category.find(params[:category_id])
     end
-
 
     def product_params
       params.require(:product).permit(:product_name, :price, :description, :discount, :visibility, :image, :rating, :code, :store_id, :category_id)  

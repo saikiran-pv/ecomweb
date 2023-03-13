@@ -1,6 +1,10 @@
 <div class="result">
 <div><h1>Stores</h1></div>
-<div><%= link_to "Create Stores",new_admin_store_path, class:"btn btn-dark"%></div>
+  <div>
+    <% if current_user.super_admin? %>
+      <%= link_to "Create Stores",new_admin_store_path, class:"btn btn-dark"%>
+    <% end %>
+  </div>
 </div>
 
 <table class="table">
@@ -18,11 +22,13 @@
         <td><%= store.description %></td>
         
         <td style="display:flex; flex-direction:row;">
-          <%= link_to "Show", store, class: "btn btn-success" %>
-          <%= link_to "Edit", store, class: "btn btn-primary" %>
-          <%= link_to "Delete", store, class: "btn btn-danger" %>
+          <%= link_to "Show", admin_store_path(store.id), class: "btn btn-success" %>
+          <%= link_to "Edit", edit_admin_store_path(store.id), class: "btn btn-primary" %>
+          <%= link_to "Delete", admin_store_path(store.id), method: :delete, class: "btn btn-danger" %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+

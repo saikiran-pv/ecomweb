@@ -2,10 +2,17 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
 
   def index
-    @users = User.all
+    if current_user.is_admin?
+      @users = User.all
+    end
+    if current_user.user?
+      flash[:error]="You can't access this page"
+      redirect_to error_path
+    end
   end
 
   def show
+    @user= User.find(params[:id])
   end
 
   def new

@@ -104,6 +104,10 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -260,6 +264,7 @@ GEM
     ssrf_filter (1.1.1)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    stripe (8.3.0)
     sys-uname (0.9.0)
       ffi (>= 1.0.0)
     thor (1.2.1)
@@ -305,6 +310,7 @@ DEPENDENCIES
   carrierwave
   debug
   devise (~> 4.9)
+  dotenv-rails
   factory_bot_rails
   imagemagick-binaries
   importmap-rails
@@ -322,6 +328,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  stripe
   turbo-rails
   turbolinks
   tzinfo-data

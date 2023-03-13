@@ -1,0 +1,14 @@
+<div class="row py-2">
+ <div class= "col-lg-4 mx-auto">
+    <%= form_with url: product_reviews_path do |form|%>
+        <%= form.label :rating %><span>&#11088;</span>
+        <%= form.select :rating,(1..5), class:"form-control py-2" %><br>
+
+        <%= form.label :comment %>
+        <%= form.text_area :comment,class:"form-control py-2" %>
+
+        <%= form.submit %>
+    <% end %>
+ </div>
+</div>
+

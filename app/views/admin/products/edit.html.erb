@@ -1,0 +1,86 @@
+<div class="row py-2">
+ <div class= "col-lg-4 mx-auto">
+    <%= form_with url: admin_products_path do |form| %>
+      <% if @product.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+          <ul>
+            <% @product.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+    
+      <div class="field mt-3">
+        <%= form.label :product_name, style: "display: block" %>
+        <%= form.text_field :product_name , autofocus: true, autocomplete: "product_name", :required =>true, class:"form-control py-2"  %>
+      </div>
+ 
+      <div class="field mt-3">
+        <%= form.label :description, style: "display: block" %>
+        <%= form.text_area :description, autofocus: true, autocomplete: "description", :required =>true, class:"form-control py-2"  %>
+      </div>
+
+      <div class="field mt-3">
+        <%= form.label :price, style: "display: block" %>
+        <%= form.number_field :price , autofocus: true, autocomplete: "price", :required =>true, class:"form-control py-2" %>
+      </div>
+
+      <div class="field mt-3">
+        <%= form.label :rating, style:"display: block"%>
+        <%= form.number_field :rating , step:0.01, autofocus: true, autocomplete: "rating", :required =>true, class:"form-control py-2" %>
+      </div>
+
+      <div class="field mt-3">
+        <%= form.label :category, style: "display: block"  %>
+        <%= select_tag "category_id", options_from_collection_for_select(Category.all, "category_name", "category_name"), autofocus: true, autocomplete: "category", :required =>true, class:"form-control py-2"  %>
+      </div>
+      <div class="field mt-3">
+        <%= form.label :store, style: "display: block"  %>
+        <%= select_tag "store_id", options_from_collection_for_select(Store.all, "store_name", "store_name"), autofocus: true, autocomplete: "store", :required =>true, class:"form-control py-2"  %>
+      </div>
+
+      <div class="field mt-3">
+        <%= form.label :code, style: "display:block"%>
+        <%= form.number_field :code, autofocus: true, autocomplete: "code", :required =>true, class:"form-control py-2"  %>
+      </div>
+
+      <div class="field mt-3">
+        <%= form.label :discount, style: "display: block" %>
+        <%= form.number_field :discount, autofocus: true, autocomplete: "discount", :required =>true, class:"form-control py-2"  %>
+      </div>
+
+      <div class="field mt-3">
+        <%= form.label :visibility, style: "display: block" %>
+        <%= form.check_box :visibility %>
+      </div>
+    
+      <div class="field mt-3">
+        <%= form.label :image, style: "display: block" %>
+        <%= form.file_field :image, autofocus: true, :required =>true, class:"form-control py-2"  %>
+        <!--
+        <% if @product.image %>
+          <%= form.check_box :remove_image%>
+        Remove image
+        <%end%>
+        -->
+      </div>
+
+      <% if @product.image.present?%>
+        <div>
+          <%= image_tag @product.image.url ,style:"height:190px; width:150px;" %>
+        </div>
+      <% end %>
+  
+      <div class="actions mt-4 mb-5" >
+        <%= form.submit "Create", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow"%>
+      </div>
+    <% end %>
+</div>
+
+<div>
+  <%= link_to "Back to products", admin_products_path %>
+</div>

@@ -1,7 +1,7 @@
 class Admin::StoresController < ApplicationController
+  before_action :check_user_permission
   before_action :set_store, only: %i[ show edit update destroy ]
 
-  # GET /stores or /stores.json
   def index
     if current_user.store_admin?
       @stores = Store.where(:id => current_user.store_id)
@@ -10,22 +10,19 @@ class Admin::StoresController < ApplicationController
     end
   end
 
-  # GET /stores/1 or /stores/1.json
   def show
     @store=Store.find(params[:id])
+    @products = @store.products
   end
 
-  # GET /stores/new
   def new
     @store = Store.new
   end
 
-  # GET /stores/1/edit
   def edit
     @store=Store.find(params[:id])
   end
 
-  # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
 
@@ -40,7 +37,6 @@ class Admin::StoresController < ApplicationController
     end
   end
 
-  # PATCH/PUT /stores/1 or /stores/1.json
   def update
     @store=Store.find(params[:id])
     respond_to do |format|
@@ -54,9 +50,8 @@ class Admin::StoresController < ApplicationController
     end
   end
 
-  # DELETE /stores/1 or /stores/1.json
   def destroy
-    @store=Store.find(params[:id])
+    @store=Store.find(params[:store_id])
     @store.destroy
 
     respond_to do |format|
@@ -66,12 +61,10 @@ class Admin::StoresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_store
       @store = Store.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def store_params
       params.permit(:store_name, :description)
     end

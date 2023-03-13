@@ -1,12 +1,27 @@
-<h2>All Orders</h2>
+<h2>My Orders</h2>
 
-<% @orders.each do |order| %>
+<table class="table">
+<thead>
+  <tr>
+    <th>Order ID</th>              
+    <th>Placed On</th>                      
+    <th>Total</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+ <% @orders.each do |order| %>
+  <tr>
+    <td><%= order.id%></td>
+    <td><%= order.updated_at%></td>         
+    <td>Rs. <%=order.total_price %></td>   
+    <td style="display:flex; flex-direction:row;">
+      <%= link_to "Order Details", order, class: "btn btn-success" %>
+    </td>   
+  </tr>
+  <% end %>
+  </tbody>
+ </table>
 
-Hi <%= current_user.name %>
-  <p>Line Items: </p>
-  <ul>
-    <% order.line_items.each do |item| %>
-    <li><%= item.quantity %> x <%= item.product.product_name %></li>
-    <% end %>
-  </ul>
-<% end %>
+
+

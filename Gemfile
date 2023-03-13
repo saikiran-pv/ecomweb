@@ -72,6 +72,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "dotenv-rails"
 end
 
 group :development do
@@ -94,4 +95,4 @@ end
 
 gem "devise", "~> 4.9"
 
-
+gem "stripe"

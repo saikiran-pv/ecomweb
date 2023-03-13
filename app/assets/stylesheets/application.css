@@ -112,7 +112,10 @@
 
 }
   .apple_pagination {
+    display: flex;
     border-radius: 10px;
+    justify-content: space-evenly;
+    width: 700px;
     /* margin-top: 20px; */
     /* background: #b5b5af; */
     /* border: 1px solid #e5e5e5; */
@@ -197,6 +200,7 @@
     /* width: 500px; */
     /* height: 300px; */
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     margin-top : 30px;
   }
@@ -240,3 +244,73 @@
   /* object-fit:cover;  */
 }
 
+.cart-product{
+  height: 175px;
+
+}
+.total-price{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 30px;
+  margin-bottom: 40px;
+}
+
+
+.tothecenter{
+ align-content: center;
+ position:relative;
+ top:175px;
+ /* top:50px; */
+ display:block;
+/* margin:auto; */
+text-align: center;
+/* margin-top: 250px; */
+}
+
+.leftx{
+  position: absolute;
+}
+.rightx{
+  position:absolute;
+  float:right;
+  margin-left: 850px;
+}
+.mybox{
+  align-content: center;
+  position:relative;
+  top:175px;
+  display:block;
+  text-align: center;
+}
+
+.mr-10{
+  margin-right: 10px;
+}
+
+.mr-30{
+  margin-right: 30px;
+}
+
+.m-20{
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.mt-20{
+  margin-top: 20px;
+}
+
+.review-box{
+border: 30px;
+margin-bottom: 100px;
+width: 300px;
+border: 1px solid green;
+padding: 25px;
+margin: 20px;
+border-radius:5px;
+}
+
+#pages_filter{
+  margin-left: 20px;
+  align-items: center;
+}

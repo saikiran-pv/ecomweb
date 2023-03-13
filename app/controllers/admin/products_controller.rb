@@ -1,17 +1,22 @@
 class Admin::ProductsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:all_products, :record, :home, :show]
   before_action :set_product, only: %i[ show update destroy ]
+  before_action :check_user_permission
   
   def home
     render :template => "home"
   end
 
   def index
-    if current_user.super_admin? || current_user.staff?
-      @products= Product.all
-    else current_user.store_admin?
-      @store = Store.find(current_user.store_id)
-      @products=@store.products
+    @products = Product.all
+    if params[:store_id]
+      @products = Store.find(params[:store_id]).products
+    end
+    if current_user.store_admin?
+      @products = Store.find(current_user.store_id).products
+    end
+    if params[:category_id]
+      @products = @products.where(:category_id => params[:category_id])
     end
   end
 
@@ -27,15 +32,19 @@ class Admin::ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    @stores = Store.all
+    @stores = Store.where(id: current_user.store_id) if current_user.store_admin?
   end
 
   def edit
-    @product=Product.find(params[:code])
+    @product=Product.find_by(params[:code])
   end
 
   def create
-    @store = Store.find(current_user.store_id)
-    @product = Product.create(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :visibility=> params[:visibility], :image=> params[:image],:rating=> params[:rating],:code=>params[:code])
+    binding.pry
+    # @store = Store.find(current_user.store_id)
+    @product = Product.new(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :visibility=> params[:visibility], :image=> params[:image],:rating=> params[:rating],:code=>params[:code],:store_id => params[:store_id], :category_id => params[:category_id])
+    @product.rating = 0
     if @product.save
       redirect_to admin_products_path, notice: "Added a product successfully"
     end
@@ -65,7 +74,6 @@ class Admin::ProductsController < ApplicationController
     def set_category
       @category = Category.find(params[:category_id])
     end
-
 
     def product_params
       params.permit(:product_name, :price, :description, :discount, :visibility, :image, :rating, :code, :store_id, :category_id)  

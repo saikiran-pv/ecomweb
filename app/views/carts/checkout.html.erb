@@ -1,0 +1,30 @@
+<div class="row py-2">
+ <div class= "col-lg-4 mx-auto">
+  <h2>Billing details</h2>
+
+  <strong class="mr-10">Payable Amount:  Rs.<%= @order.total_price%> </strong>
+
+  
+  <%= form_with url: place_order_path do |f|%>
+    <%= f.label :delivery_address %>
+    <%= select_tag :delivery_address, options_from_collection_for_select(Address.where(user_id: current_user.id), "id", "area"), :required =>true,class:"form-control py-2" %><br>
+
+    <div class="">
+        <%= link_to "Add new address", new_user_address_path(user_id: current_user.id), class: "btn btn-success" %><br><br>
+    </div>
+
+    <%= f.label :card_number%>
+    <%= f.number_field :card_number, :required =>true, class:"form-control py-2" %><br>
+
+    <%= f.label :cvv %>
+    <%= f.number_field :cvv,:required =>true, class:"form-control py-2" %><br>
+
+    <%= f.label :expiry_date %>
+    <%= f.date_field :expiry_date,:required =>true, class:"form-control py-2" %><br>
+
+    <%= f.submit "Proceed and Place Order",class:"form-control py-2 btn btn-dark fw-bold shadow" %>
+  
+  <% end %>
+
+ </div>
+</div>  

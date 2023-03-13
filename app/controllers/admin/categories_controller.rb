@@ -1,5 +1,6 @@
 class Admin::CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :check_user_permission
 
   # GET /categories or /categories.json
   def index
@@ -9,6 +10,7 @@ class Admin::CategoriesController < ApplicationController
   # GET /categories/1 or /categories/1.json
   def show
     @category = Category.find_by(category_name: params[:category_name])
+    @products = @category.products
   end
 
   # GET /categories/new
@@ -18,6 +20,7 @@ class Admin::CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+    @category=Category.find_by(category_name: params[:category_name])
   end
 
   # POST /categories or /categories.json

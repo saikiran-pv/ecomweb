@@ -36,17 +36,12 @@
       </div>
 
       <div class="field mt-3">
-        <%= form.label :rating, style:"display: block"%>
-        <%= form.number_field :rating , step:0.01, autofocus: true, autocomplete: "rating", :required =>true, class:"form-control py-2" %>
-      </div>
-
-      <div class="field mt-3">
         <%= form.label :category  %>
-        <%= select_tag "category_id", options_from_collection_for_select(Category.all, "category_name", "category_name"), autofocus: true, autocomplete: "category", :required =>true, class:"form-control py-2"  %>
+        <%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "category_name"), autofocus: true, autocomplete: "category", :required =>true, class:"form-control py-2"  %>
       </div>
       <div class="field mt-3">
         <%= form.label :store  %>
-        <%= select_tag "store_id", options_from_collection_for_select(Store.all, "store_name", "store_name"), autofocus: true, autocomplete: "store", :required =>true, class:"form-control py-2"  %>
+        <%= select_tag "store_id", options_from_collection_for_select(@stores, "id", "store_name"), autofocus: true, autocomplete: "store", :required =>true, class:"form-control py-2"  %>
       </div>
 
       <div class="field mt-3">

@@ -1,4 +1,5 @@
 class Admin::OrdersController < ApplicationController
+  before_action :check_user_permission
 
     def index
       @orders = Order.all

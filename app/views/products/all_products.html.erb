@@ -1,55 +1,24 @@
-<br><br>
-
 <div id="design-outline">
+  <%= form_with url: all_products_path ,id: 'pages_filter' ,class: 'filter d-flex', method: :get, remote: true do |form| %>
+      
+    <%= form.select :per_page,[1,2,3,4,5,10,20,30], {:prompt => true, :selected => @per_page || 10}, {class: 'form-control py-1 m-20', style: "width:50px;"}  %><br><br>
 
-<div class="apple_pagination" >
+    <%= form.label :sort_by %>
+    <%= form.select :sort_price,["Relevance","Price - low to high","Price - high to low", "Highest rating"], {:prompt => true, :selected => @sort_price || "Relevance"}, {class: 'form-control py-1 m-20', style: "width:200px;"} %>
+
+    <%= form.label :categories %>
+    <%= select_tag :category_id, options_from_collection_for_select(Category.all, "id", "category_name", :selected => @category_id), include_blank: "All", class: 'form-control py-1 m-20', style: "width:200px;"%>
+    <%= form.submit "Filter"%>
+  <% end %>
+  <div class="apple_pagination" >
     <%= page_entries_info @products %><br>
     <%= will_paginate @products, :container => false %>
-
-    <%= form_with url: all_products_path ,id: 'pages_filter' ,class: 'filter', method: :get, remote: true do |form| %>
-      <%= form.select :per_page,[1,2,3,4,5,10,20,30],{}, {class: 'form-control', :onchange=>"handleChange('pages_filter')"}  %>
-      <%= form.submit %>
-    <% end %> 
-</div>
-
-<div class="pagenum1">
-  <%= form_with url: all_products_path ,id: 'price_filter', method: :get, remote: true do |form| %>
-    <%= form.label :sort_by %>
-    <%= form.select :sort_price, ["Relevance","Price - low to high","Price - high to low", "Highest rating"],{}, {class: 'form-control', :onchange=>"handleChange('price_filter')"} %>
-    <%= form.submit "save"%>
-  <% end %><br>
-
-
-</div>
-
-<div>
-<%= form_with url: all_products_path, method: :get do |form|%>
-   <span id="checkbox"> <% Product::CATEGORIES.each do |key|%>
-             <%= form.check_box :categories, {multiple: true}, key, nil%>
-             <%= form.label key%>
-    <%end%></span>
-    <%= form.submit "Filter by"%>
-<% end %>
-</div>
-
+  </div>
 </div>
  
-<div class="row" style="margin-bottom:80px;">
+<div class="row" style="margin-bottom:60px;">
   <% @products.each do |product|%>
-      <div class="col-md-4" onclick="show(this)">
-
-        <div class="product-box" id="product-box">
-            <%=image_tag product.image.url, class:"product-index" if product.image?%>
-              <ul>
-                    <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
-                        Rs.<%= product.price%><br>
-                        <span>&#11088;</span><%= product.rating%><br>
-                    
-                        <%= link_to "", product_path(code: product.code)%>
-                        <%= button_to "Add to cart", add_to_cart_path(:product_id => product.id), class: "btn btn-success" %>
-              </ul>
-        </div>
-      </div>
+      <%= render "product", product: product %>
   <%end%>
 </div>
 

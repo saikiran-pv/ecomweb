@@ -1,45 +1,47 @@
 class CartsController < ApplicationController
-  # rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
-  before_action :set_cart, only: %i[ destroy add_to_cart]
-  # before_action :ensure_cart_owner, only: [:show, :edit, :update, :destroy]
+  before_action :set_cart, only: %i[show destroy add_to_cart remove_from_cart empty_cart update_cart place_order checkout]
 
   def show
-    # @q=Cart.find(params[:id])
     @cart = current_order
-    
-
-    # unless @q.user.id == current_user.id
-    #   flash[:error] = "You are not authorized to access this cart."
-    #   redirect_to cart_error_path
-    # end
   end
 
   def add_to_cart
-    binding.pry
-    @line_items = @cart.line_items.find_by(:product_id => params[:product_id])  
-    @order = Order.find(session[:order_id])
-    @product = Product.find(params[:product_id])
-    if @order.carts.find_by(product_id: @product.id).present?
-      @line_item = @order.carts.find_by(product_id: params[:id])
-      @line_item.quantity = @line_item.quantity + 1
+    @product= Product.find(params[:product_id])
+    @line_item = @order.line_items.find_by(:product_id => params[:product_id])
+    if @line_item
+      @line_item.quantity = @line_item.quantity + params[:quantity].to_i
+      @line_item.save
     else
-      @line_item = Cart.create(product_id: @product.id)
-      @order.carts << @line_item 
-      flash[:notice] = "Added to cart"
+      @order.line_items.create(:product_id => params[:product_id], :quantity => params[:quantity], :price => @product.price)
     end
-    redirect_to cart_path(@current_order)
+    @order.save
+    flash[:notice] = "Added to cart"
+    redirect_to cart_path 
   end
 
-  def destroy
-    @line_item = LineItem.find(params[:id])
-    @line_item.destroy
-    redirect_to cart_path(@current_order)
+  def remove_from_cart
+    @line_item = @order.line_items.find(params[:id])
+    if @line_item.destroy
+      @order.save
+      flash[:notice] = "Removed from cart"
+      redirect_to cart_path
+    end
   end  
+
+  def update_cart
+    @line_item = @order.line_items.find(params[:id])
+    @line_item.quantity = params[:quantity]
+    if @line_item.save
+      @order.save
+      flash[:notice] = "Updated Line Item"
+    end
+    redirect_to cart_path
+  end
   
 
-  def destroy
-    @cart.destroy if @cart.id == session[:cart_id]
-    session[:cart_id] = nil
+  def empty_cart
+    @order.destroy if @order.id == session[:order_id]
+    session[:order_id] = nil
     respond_to do |format|
       format.html { redirect_to cart_url, notice: 'Your cart is currently empty' }
       format.json { head :no_content }
@@ -47,12 +49,29 @@ class CartsController < ApplicationController
   end
     
   def error
-    @cart= Cart.new
+    render layout: "simple_layout", template: "carts/error"
+  end
+
+  def checkout
+
+  end
+
+  def place_order
+    binding.pry
+    @order.address_id = params[:delivery_address]
+    @order.card_number = params[:card_number]
+    @order.cvv = params[:cvv]
+    @order.expiry_date = params[:expiry_date]
+    if @order.save
+      @order.update(status: "placed")
+      flash[:notice] = "Order Placed Successfully"
+      redirect_to @order
+    end
   end
 
   private
     def set_cart
-      @cart = current_order
+      @order = current_order
     end
 
     def set_product
@@ -67,19 +86,5 @@ class CartsController < ApplicationController
       params.require(:cart).permit(:user_id)
     end
 
-    # def invalid_cart
-    #   logger.error "Attempt to access invalid cart #{params[:id]}"
-    #   render :template => "invalid_page", notice: 'Invalid cart'
-    # end
-
-    # def ensure_cart_owner
-    #   @cart = Cart.find(params[:id])
-    #   unless @cart.user == current_user
-    #     flash[:error] = "You are not authorized to access this cart."
-    #     render :template => "invalid_page"
-    #   end
-    # end
 end
 
-
-#-------------------------------------------------------

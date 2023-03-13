@@ -1,0 +1,13 @@
+<% if @user.addresses.empty? %>
+  <strong>No Addresses Found</strong>
+<% else %>
+  <% @user.addresses.each do |address| %>
+  <strong><%= address.address_type %></strong>
+  <%= address.house%>
+  <%= address.area%>
+  <%= address.city%>
+  <%= address.zipcode%><br>
+  <% end %>
+<% end %>
+<br/>
+<%= link_to "+Add New Address", new_user_address_path%>

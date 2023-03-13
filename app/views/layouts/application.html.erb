@@ -28,25 +28,31 @@
         </a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
-              <% if current_user%>
+              <% if current_user %>
+                <% unless request.original_url.include?("admin") %>
                   <li class="nav-item">
-                      <a class="nav-link"><%= link_to "My cart", cart_path(current_user.id), class: "btn btn-dark", style:"margin-top:-17px;"%></a>
+                      <a class="nav-link"><%= link_to "My cart", cart_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link"><%= link_to "My Orders", orders_path(current_user.id), class: "btn btn-dark", style:"margin-top:-17px;"%></a>
+                      <a class="nav-link"><%= link_to "My Orders", orders_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
                   </li>
-                <% if current_user.super_admin? %>
-                <li class="nav-item">
-                    <a class="nav-link"><%= link_to "Admin portal", admin_dashboard_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
-                </li>
-                <% elsif current_user.store_admin? %>
-                <li class="nav-item">
-                    <a class="nav-link"><%= link_to "Store Admin portal", admin_dashboard_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
-                </li>
-                <% elsif current_user.staff? %>
-                <li class="nav-item">
-                    <a class="nav-link"><%= link_to "Staff portal", admin_dashboard_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
-                </li>
+                  <% if current_user.super_admin? %>
+                    <li class="nav-item">
+                      <a class="nav-link"><%= link_to "Admin portal", admin_dashboard_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
+                    </li>
+                  <% elsif current_user.store_admin? %>
+                    <li class="nav-item">
+                      <a class="nav-link"><%= link_to "Store Admin portal", admin_dashboard_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
+                    </li>
+                  <% elsif current_user.staff? %>
+                    <li class="nav-item">
+                      <a class="nav-link"><%= link_to "Staff portal", admin_dashboard_path, class: "btn btn-dark", style:"margin-top:-17px;"%></a>
+                    </li>
+                  <% end %>
+                <% else  %>
+                  <li class="nav-item">
+                    <a class="nav-link"><%= link_to "Login as User", "http://localhost:3000/home", class: "btn btn-dark", style:"margin-top:-17px;"%></a>
+                  </li>
                 <% end %>
               <% end %>
               <li class="nav-item">
@@ -61,6 +67,7 @@
                           <a class="dropdown-item" style="color:white;"><%= link_to "Register", new_user_registration_path, class:"btn btn-light" %></a>
                         <% else %> 
                           <a class="dropdown-item" style="color:white;"><%= link_to "Edit Profile", edit_user_registration_path, class:"btn btn-light" %></a>
+                          <a class="dropdown-item" style="color:white;"><%= link_to "My Addresses", user_addresses_path(current_user), class:"btn btn-light" %></a>
                           <a class="dropdown-item" style="color:white;"><%= button_to "Log out", destroy_user_session_path, :method => :delete, class:"btn btn-light" %></a>
                         <% end %>
                       </div>
@@ -74,7 +81,24 @@
      <div class="split left">
       <div class="centered">
         <ul style="display: flex;flex-direction: column;">
-        <% if current_user %>
+        <% if current_user && current_user.is_admin? && request.original_url.include?("admin") %>
+          <% if current_user.super_admin?%>
+            <a style="color:white;"><%= link_to "Store admins/staffs", admin_users_path, class:"btn btn-dark"%></a><br>
+            <a style="color:white;"><%= link_to "Orders",admin_orders_path, class:"btn btn-dark"%></a><br>
+          <% end %>
+          <a style="color:white;"><%= link_to "Stores",admin_stores_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Categories",admin_categories_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Products",admin_products_path, class:"btn btn-dark"%></a><br>
+        <% else %>
+          <a style="color:white;"><%= link_to "Home",home_user_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Stores",stores_path, class:"btn btn-dark"%></a><br>
+          <a style="color:white;"><%= link_to "Products",all_products_path, class:"btn btn-dark"%></a><br>
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Women">Women</a><br>
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Men">Men</a><br>
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Kids">Kids</a><br> 
+          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Accessories">Accessories</a><br>
+        <% end %>
+        <!-- <% if current_user %>
           <% if current_user.user? %>
             <a style="color:white;"><%= link_to "Home",home_user_path, class:"btn btn-dark"%></a><br>
             <a style="color:white;"><%= link_to "Stores",stores_path, class:"btn btn-dark"%></a><br>
@@ -108,7 +132,7 @@
             <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Men">Men</a><br>
             <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Kids">Kids</a><br> 
             <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Accessories">Accessories</a><br>
-        <% end%>
+        <% end%> -->
         </ul>
       </div>
      </div>
