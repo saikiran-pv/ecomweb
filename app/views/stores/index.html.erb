@@ -1,31 +1,20 @@
 <div class="text-center" >
   <h1>Stores</h1>
-  <% if current_user.store_admin?  %>
-    <%= link_to "Add new store", new_store_path %>
-  <% end %>
 </div>
+
   <div class="row">
     <% @stores.each do |store|%>
-        <div class="col-md-4">
+        <div class="col-md-4" onclick="show(this)">
           <div class="store-box">
                 <ul>
                       <strong><%= store.store_name%></strong><br>
                       <%= store.description%><br>
-                       <%= link_to "Show", store%> 
-                      <% if current_user.store_admin?%>
-                          <%=link_to "Edit", edit_store_path(store)%> |
-                          <%= link_to "Destroy", store, method: :delete, data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?"
-                      }%>
-                    <% end %>
+                       <%= link_to "", store%> 
                 </ul>
           </div>
-        </div>
+        </div>       
     <%end%>
   </div>
-
-<br>
-
+<%= javascript_include_tag "show"%>
 
 

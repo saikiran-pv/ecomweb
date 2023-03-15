@@ -14,20 +14,23 @@
   <% end %>
 
   <div class="field mt-3">
-    <%= form.label :store_name, style: "display: block" %>
+    <%= form.label :store_name do%>
+    Store name<span class="required" style="color:red;">*</span>
+    <% end %><br />
     <%= form.text_field :store_name, autofocus: true, autocomplete: "name", :required =>true, class:"form-control py-2" %>
   </div>
 
   <div class="field mt-3">
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description, autofocus: true, autocomplete: "name", class:"form-control py-2" %>
+    <%= form.label :description do %>
+    Description<span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= form.text_field :description, autofocus: true, autocomplete: "name",:required =>true, class:"form-control py-2" %>
   </div>
 
   <div class="actions mt-4 mb-5">
     <%= form.submit  "Create", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow"  %>
   </div>
 <% end %>
-
 
 
 <div>

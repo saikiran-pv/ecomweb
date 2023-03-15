@@ -1,24 +1,6 @@
-<%= @store.store_name %>
-
-<div>
-  <%= link_to "Edit this store", edit_admin_store_path(@store) %> |
-  <%= link_to "Back to stores", admin_stores_path %><br>
-  <br>
-  <%= button_to "Destroy this store", @store, data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Are you sure?"
-                } %>
-
-
-<br>
-<!-- <%= link_to "Add products to this store" ,new_admin_store_product_path(@store)%> -->
-
-<br>
-<br>
-
-  <div>
-    <%= link_to "Show products", admin_store_products_path(@store) %>
-  </div>
+<div class="text-center">
+  <h2><%= @store.store_name %></h2>
+   <%= link_to "Show products summary", admin_store_products_path(@store) %>
 </div>
 
 <div class="row" style="margin-bottom:80px;">

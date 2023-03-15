@@ -1,13 +1,32 @@
 <% if @user.addresses.empty? %>
   <strong>No Addresses Found</strong>
 <% else %>
-  <% @user.addresses.each do |address| %>
-  <strong><%= address.address_type %></strong>
-  <%= address.house%>
-  <%= address.area%>
-  <%= address.city%>
-  <%= address.zipcode%><br>
+<table class="table">
+  <thead><tr>
+    <th><h3>Address type</h3></th>
+    <th>House/Apartment</th>
+    <th>Area</th>
+    <th>City</th>
+    <th>Zipcode</th>
+    <th>Action</th>
+  </tr></thead>
+
+  <tbody>
+      <% @user.addresses.each do |address| %>
+      <tr>
+      <td><strong><%= address.address_type %></strong></td>
+      <td><%= address.house%></td>
+      <td><%= address.area%></td>
+      <td><%= address.city%></td>
+      <td><%= address.zipcode%><br></td>
+      <td><%= link_to "Delete",user_address_path(:user_id => current_user.id,:id => address.id), data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                }, class: "btn btn-danger" %></td>
+    </tr>
+  </tbody>
   <% end %>
+</table>
 <% end %>
 <br/>
-<%= link_to "+Add New Address", new_user_address_path%>
+<%= link_to "+ Add New Address", new_user_address_path%>

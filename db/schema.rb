@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_13_165620) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_14_140745) do
   create_table "addresses", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "house"
@@ -61,6 +61,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_13_165620) do
     t.integer "address_id"
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "card_number"
+    t.integer "cvv"
+    t.date "expiry_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order_id"
+    t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
   create_table "products", force: :cascade do |t|

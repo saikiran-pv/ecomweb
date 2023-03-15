@@ -10,7 +10,7 @@
                 <th scope="col">Quantity</th>
                 <th scope="col">Product</th>
                 <th scope="col">Unit Price</th>
-                <th scope="col">Line Total</th>
+                <th scope="col">Line Total </th>
                 <th scope="col">  </th>
               </tr>
             </thead>
@@ -18,15 +18,21 @@
               <% @cart.line_items.each do |item| %>
                 <tr>
                   <td><%= image_tag item.product.image.url, class: "cart-product" %><br>
-                  <span>&#11088;</span><%= item.product.rating%></td>
+                      <% unless item.product.rating %>
+                        <%= render plain: "-Be the first to review-" %>
+                      <% else %>
+                        <span>&#11088;</span><%=item.product.rating %>
+                      <% end %>
+                    </td>
                     <td>
                       <%= button_tag "-", type: 'button', onclick: "decrement(this, #{item.id})", class: 'btn btn-default'%>
-                      <%= number_field_tag "line_quantity_#{item.id}", item.quantity, {style: "width:40px"} %>
+                      <%= number_field_tag "line_quantity_#{item.id}", item.quantity, {style: "width:40px", onblur: "set_quantity(this, #{item.id})"}%>
                       <%= button_tag "+", type: 'button', onclick: "increment(this, #{item.id})", class: 'btn btn-default'%><br>
                     </td>
                   <td><%= item.product.product_name %></td>
-                  <td><strong>Rs.<%= item.product.price  %></strong></td>
-                  <td>Rs.<%= item.total_price %></td>
+                  <td>Rs.<%= item.product.price  %></td>
+                  <td><strong>Rs.<%= item.total_price %></strong><br>
+                   <%= content_tag :p, item.price * item.quantity, style: "text-decoration: line-through;color: gray;" %></td>
                   <td>
                     <%= button_to "Remove", remove_from_cart_path(item.id), method: :delete %>
                     <%= button_to "Update", update_cart_path(item.id), method: :patch, :id => "update_#{item.id}", params: { "quantity": item.quantity }%>
@@ -43,7 +49,7 @@
     <div><%= link_to "Continue Shopping", all_products_path, class:"btn btn-success" %></div>
     <div style="display:flex; flex-direction:row; align-items:center">
       <strong class="mr-10">Total:  Rs.<%=@order.total_price  %> </strong>
-      <a><%= button_to 'Clear Cart', @order, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-success mr-30" %></a>
+      <%= link_to 'Clear Cart', empty_cart_path, class: "btn btn-success mr-30" %>
       <%# <a><%= button_to "Update Cart", add_to_cart_path, method: :post, class: "btn btn-success mr-30" %>
     </div>
   </div>
@@ -72,6 +78,12 @@
     }
     update = document.getElementById("update_" + id);
     update.parentElement.lastChild.value = quantity.value;
+  }
+
+  function set_quantity(ele, id) {
+    // debugger;
+    update = document.getElementById("update_" + id);
+    update.parentElement.lastChild.value = ele.value;
   }
 </script>
 

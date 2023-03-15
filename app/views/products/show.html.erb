@@ -11,8 +11,13 @@
       <div class="rightx" >
         <ul>
           <strong><%= @product.product_name%></strong><br>by <strong><%= @product.store.store_name%></strong><br>
-          Rs.<%= @product.price%><br>
-          <%= @product.description%><br>
+          <% if @product.discounted_price%>
+            <%= content_tag :p, @product.price, style: "text-decoration: line-through;color: gray; margin-bottom: 0px" %>
+            <strong>Rs.<%= @product.discounted_price%></strong><br>
+          <% else %>
+            <strong>Rs.<%= @product.price%></strong><br>
+          <% end%>
+          <strong>Description:</strong> <%= @product.description%><br>
           <strong><%= @product.category.category_name%>'s Category</strong><br>
           <span>&#11088;</span><%= @product.rating%>
         </ul>
@@ -26,7 +31,7 @@
             <%= form.submit 'Add to Cart', class: "btn btn-success" %>
           <% end %>
         </div> 
-        <div class="review-box">
+        <div class="review-box" style="margin-bottom: 100px">
           <h3>Reviews</h3>
           <% @product.reviews.each do |review| %>
             <strong>Rating:</strong><%= review.rating %><span>&#11088;</span><br>

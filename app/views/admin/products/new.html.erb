@@ -11,6 +11,7 @@
 
           <ul>
             <% @product.errors.each do |error| %>
+            <% binding.pry %>
               <li><%= error.full_message %></li>
             <% end %>
           </ul>
@@ -19,7 +20,9 @@
 
     
       <div class="field mt-3">
-        <%= form.label :product_name %>
+        <%= form.label :product_name do %>
+        Product name<span class="required" style="color:red;">*</span>
+        <% end %><br />
         <%= form.text_field :product_name , autofocus: true, autocomplete: "product_name", :required =>true, class:"form-control py-2"  %>
       </div>
  
@@ -36,45 +39,38 @@
       </div>
 
       <div class="field mt-3">
-        <%= form.label :category  %>
+        <%= form.label :category do  %>
+        Category<span class="required" style="color:red;">*</span>
+        <% end %><br />
         <%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "category_name"), autofocus: true, autocomplete: "category", :required =>true, class:"form-control py-2"  %>
-      </div>
-      <div class="field mt-3">
-        <%= form.label :store  %>
-        <%= select_tag "store_id", options_from_collection_for_select(@stores, "id", "store_name"), autofocus: true, autocomplete: "store", :required =>true, class:"form-control py-2"  %>
       </div>
 
       <div class="field mt-3">
-        <%= form.label :code, style: "display:block"%>
+        <%= form.label :store do %>
+        Store<span class="required" style="color:red;">*</span>
+        <% end %><br />
+        <%= select_tag "store_id", options_from_collection_for_select(@stores || Store.all, "id", "store_name"), autofocus: true, autocomplete: "store", :required =>true, class:"form-control py-2"  %>
+      </div>
+
+      <div class="field mt-3">
+        <%= form.label :code do%>
+        Product Code<span class="required" style="color:red;">*</span>
+        <% end %><br />
         <%= form.number_field :code, autofocus: true, autocomplete: "code", :required =>true, class:"form-control py-2"  %>
       </div>
 
       <div class="field mt-3">
         <%= form.label :discount %>
-        <%= form.number_field :discount, autofocus: true, autocomplete: "discount", :required =>true, class:"form-control py-2"  %>
-      </div>
-
-      <div class="field mt-3">
-        <%= form.label :visibility %>
-        <%= form.check_box :visibility %>
+        <%= form.number_field :discount, autofocus: true, autocomplete: "discount", class:"form-control py-2"  %>
       </div>
     
       <div class="field mt-3">
-        <%= form.label :image %>
+        <%= form.label :image do%>
+        Image<span class="required" style="color:red;">*</span>
+        <% end %><br />
         <%= form.file_field :image, autofocus: true, :required =>true, class:"form-control py-2"  %>
-        <!--
-        <% if @product.image %>
-          <%= form.check_box :remove_image%>
-        Remove image
-        <%end%>
-        -->
+   
       </div>
-
-      <% if @product.image.present?%>
-        <div>
-          <%= image_tag @product.image%>
-        </div>
-      <% end %>
   
       <div class="actions mt-4 mb-5" >
         <%= form.submit "Create", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow"%>

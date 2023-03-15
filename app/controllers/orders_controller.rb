@@ -1,7 +1,6 @@
 class OrdersController < ApplicationController
 
   def index
-    binding.pry
     @orders = Order.where(user_id: current_user.id, status: "placed")
   end
 

@@ -12,6 +12,7 @@
     <th>Price </th>
     <th>Rating</th>
     <th>Discount</th>
+    <th>Discounted Price</th>
     <th>Actions</th>
   </tr>
 </thead>
@@ -20,13 +21,22 @@
   <tr>
     <td><%= product.code%></td>
     <td><%= product.product_name%></td>         
-    <td>Rs.<%=product.price %></td>   
-    <td><span>&#11088;</span><%=product.rating %></td>      
+    <td>Rs.<%=product.price %></td> 
+    <td><% unless product.rating %>
+        <%= render plain: "-"%>
+        <% else %>
+        <span>&#11088;</span><%=product.rating %>
+        <% end %>
+    </td> 
     <td><%=product.discount %>%</td>
+    <td>Rs.<%=product.discounted_price %></td>
     <td style="display:flex; flex-direction:row;">
       <%= link_to "Show", admin_product_path(code: product.code), class: "btn btn-success" %>
       <%= link_to "Edit", edit_admin_product_path(code: product.code), class: "btn btn-primary" %>
-      <%= link_to "Delete", product_path(code: product.code), method: :delete, class:"btn btn-danger" %>
+      <%= link_to "Delete",admin_product_path(code: product.code), data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                }, class: "btn btn-danger" %>
     </td>   
   </tr>
   <% end %>

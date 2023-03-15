@@ -12,7 +12,7 @@ class CartsController < ApplicationController
       @line_item.quantity = @line_item.quantity + params[:quantity].to_i
       @line_item.save
     else
-      @order.line_items.create(:product_id => params[:product_id], :quantity => params[:quantity], :price => @product.price)
+      @order.line_items.create(:product_id => params[:product_id], :quantity => params[:quantity], :price => @product.discounted_price || @product.price)
     end
     @order.save
     flash[:notice] = "Added to cart"
@@ -42,10 +42,8 @@ class CartsController < ApplicationController
   def empty_cart
     @order.destroy if @order.id == session[:order_id]
     session[:order_id] = nil
-    respond_to do |format|
-      format.html { redirect_to cart_url, notice: 'Your cart is currently empty' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Cart is cleared"
+    redirect_to cart_path
   end
     
   def error
@@ -53,15 +51,15 @@ class CartsController < ApplicationController
   end
 
   def checkout
-
   end
 
   def place_order
     binding.pry
+    @payment= Payment.new(:card_number => params[:card_number], :cvv => params[:cvv], :expiry_date => "#{params["expiry_date(1i)"]}/#{params["expiry_date(2i)"]}", :order_id => @order.id)
     @order.address_id = params[:delivery_address]
-    @order.card_number = params[:card_number]
-    @order.cvv = params[:cvv]
-    @order.expiry_date = params[:expiry_date]
+    # @order.card_number = params[:card_number]
+    # @order.cvv = params[:cvv]
+    # @order.expiry_date = params[:expiry_date]
     if @order.save
       @order.update(status: "placed")
       flash[:notice] = "Order Placed Successfully"

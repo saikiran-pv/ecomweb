@@ -1,28 +1,31 @@
-<h1>Editing category</h1>
-<%= form_with url: edit_admin_category_path do |form| %>
-  <% if @category.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
 
-      <ul>
-        <% @category.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<h2 class=text-center>Edit category details</h2>
+<div class="row py-2">
+ <div class= "col-lg-4 mx-auto">
+  <%= form_with url: admin_category_path(@category), method: :patch do |form| %>
+    <% if @category.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
 
-  <div>
-    <%= form.label :category_name, style: "display: block" %>
-    <%= form.text_field :category_name, {value: @category.category_name} %>
+        <ul>
+          <% @category.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  <div class="field mt-3">
+    <%= form.label :store_name, style: "display: block" %>
+    <%= form.text_field :store_name, value: @category.category_name, class:"form-control py-2"  %>
   </div>
 
-  <div>
+  <div class="field mt-3">
     <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description, {value: @category.description} %>
+    <%= form.text_field :description, value: @category.description, class:"form-control py-2"  %>
   </div>
 
-  <div class="mt-20">
-    <%= form.submit %>
+  <div>
+    <%= form.submit "Update Changes", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow"%>
   </div>
 <% end %>

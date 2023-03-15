@@ -3,8 +3,18 @@
     <a><%= link_to image_tag(product.image.url , class:"product-index"), product_path(code: product.code) %></a>
         <ul>
           <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
-              Rs.<%= product.price%><br>
-              <span>&#11088;</span><%= product.rating%><br>
+          <!--<div style="font-weight:bold;color:red;"><%= product.discount %>% Off</div>-->
+              <% if product.discounted_price%>
+                <%= content_tag :p, product.price, style: "text-decoration: line-through;color: gray; margin-bottom: 0px" %>
+                <strong>Rs.<%= product.discounted_price%></strong><br>
+              <% else %>
+                <strong>Rs.<%= product.price%></strong><br>
+              <% end%>
+              <% unless product.rating %>
+                <%= render plain: "-Be the first to review-" %>
+              <% else %>
+                <span>&#11088;</span><%=product.rating %>
+              <% end %>
               
               <%= form_with url: add_to_cart_path, method: :post do |form|%>
                 <%= form.hidden_field :product_id, value: product.id %>
@@ -15,3 +25,10 @@
         </ul>
   </div>
 </div>
+
+<style>
+.striked-price{
+
+color: red;
+}
+</style>

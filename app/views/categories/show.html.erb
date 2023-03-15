@@ -1,32 +1,14 @@
+<h2 class="text-center"><%= @category.category_name%></h2>
 
-<% if current_user.store_admin? || current_user.super_admin? || current_user.staff? %>
-  <div>
-    <%= link_to "Edit this category", edit_category_path(category_name: @category.category_name) %> |
-    <%= link_to "Back to categories", categories_path %>
-
-    <%= button_to "Destroy this category", @category, method: :delete %>
+<% if @category.products.present? %>
+  <div class="row" style="margin-bottom:80px;">
+    <% @products.each do |product|%>
+      <%= render "products/product", product: product %>
+    <%end%>
   </div>
+<% else %>
+  <%= render plain: "No entries found" %>
 <% end %>
- 
-<div class="row" style="margin-bottom:80px;">
-  <% @products.each do |product|%>
-    <%= render "products/product", product: product %>
-      <!-- <div class="col-md-4" onclick="show(this)">
-
-        <div class="product-box" id="product-box">
-            <%=image_tag product.image.url, class:"product-index" if product.image?%>
-              <ul>
-                    <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
-                        Rs.<%= product.price%><br>
-                        <span>&#11088;</span><%= product.rating%><br>
-                    
-                        <%= link_to "", product_path(code: product.code)%>
-                        <%= button_to "Add to cart", add_to_cart_path(:product_id => product.id), class: "btn btn-success" %>
-              </ul>
-        </div>
-      </div> -->
-  <%end%>
-</div>
 
 <%= javascript_include_tag "show"%>
 

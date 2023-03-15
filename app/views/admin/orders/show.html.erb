@@ -1,0 +1,23 @@
+<table class="table">
+<thead>
+<h2> Order ID: <%= @order.id%></h2>
+<tr><th>
+  Paid: Rs.<%= @order.total_price%><br>
+  Delivered to: <%= @order.address.address_type %><br>
+  Placed on:  <%= @order.updated_at%><br></th>
+</tr>
+</thead>
+<tbody>
+  <tr>
+    <% @order.line_items.each do |item|%>
+        <td><%= image_tag item.product.image.url, width:"100"%></td>
+        <td><%= item.product.product_name%></td>
+        <td><strong>Qty:</strong><%= item.quantity%></td> 
+    
+  </tr><% end %>
+  </tbody>
+</table>
+<div>
+  <%= link_to "All Orders", admin_orders_path %>
+</div>
+

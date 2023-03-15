@@ -11,12 +11,10 @@ class User < ApplicationRecord
     staff: 'staff'
   }
 
-  has_many :orders
+  has_many :orders, dependent: :destroy
   belongs_to :store, optional: true
-  has_many :reviews
-  has_many :addresses
-
-  attribute :additional_address, :string
+  has_many :reviews, dependent: :destroy
+  has_many :addresses, dependent: :destroy
 
   validates :name, length: { maximum: 20 }
 

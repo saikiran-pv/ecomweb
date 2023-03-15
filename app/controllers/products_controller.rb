@@ -29,10 +29,6 @@ class ProductsController < ApplicationController
     @category_id = params[:category_id] if params[:category_id] && params[:category_id].present?
     @products = @products.where(category_id: @category_id) if @category_id
 
-    # respond_to do |format|
-    #   format.json { render json: @products}
-    #   format.html 
-    # end
   end
 
   def show

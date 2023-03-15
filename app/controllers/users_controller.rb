@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :check_user_permission
 
   def index
     if current_user.is_admin?
@@ -24,7 +25,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    binding.pry
     @user = User.new(user_params)
 
     if @user.save
@@ -48,6 +48,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    binding.pry
     @user.destroy
 
     respond_to do |format|

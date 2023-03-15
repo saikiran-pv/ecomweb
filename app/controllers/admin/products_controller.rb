@@ -37,29 +37,31 @@ class Admin::ProductsController < ApplicationController
   end
 
   def edit
-    @product=Product.find_by(params[:code])
+    @product=Product.find_by(code: params[:code])
   end
 
   def create
-    binding.pry
-    # @store = Store.find(current_user.store_id)
-    @product = Product.new(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :visibility=> params[:visibility], :image=> params[:image],:rating=> params[:rating],:code=>params[:code],:store_id => params[:store_id], :category_id => params[:category_id])
-    @product.rating = 0
+    @product = Product.new(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :image=> params[:image],:code=>params[:code],:store_id => params[:store_id], :category_id => params[:category_id])
+    # @product.rating = 0
     if @product.save
       redirect_to admin_products_path, notice: "Added a product successfully"
+    else
+      render :action => 'new'
     end
   end
 
   def update
-    @product = Product.find(params[:code])
-    @product.update(product_params)
-    redirect_to products_path
+    @product = Product.find_by(code: params[:code])
+    if @product.update(product_params)
+      redirect_to admin_products_path, notice: "Updated product successfully"
+    else
+      render :action => 'edit'
+    end
   end
 
   def destroy
-    @product = Product.find(params[:code])
     @product.destroy
-    redirect_to products_path
+    redirect_to admin_products_path,notice: "Product destroyed successfully"
   end
 
   private
@@ -76,6 +78,6 @@ class Admin::ProductsController < ApplicationController
     end
 
     def product_params
-      params.permit(:product_name, :price, :description, :discount, :visibility, :image, :rating, :code, :store_id, :category_id)  
+      params.permit(:product_name, :price, :description, :discount, :image, :code, :store_id, :category_id)  
     end
 end

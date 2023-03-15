@@ -2,7 +2,7 @@ class Product < ApplicationRecord
 
   has_many :line_items
   has_many :orders, through: :line_items
-  has_many :reviews
+  has_many :reviews, dependent: :destroy 
 
   belongs_to :category
   belongs_to :store
@@ -11,8 +11,6 @@ class Product < ApplicationRecord
   
   validates :product_name, presence: true
   validates :description, presence: true
-  validates :discount, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100, message: "Discount percentage must be between 0 and 100" }
-  validates :rating, presence: true,  numericality: {greater_than: 0.0, less_than: 5.0, message: "Rating must be between 0 and 5"}
   validates :price,  numericality: { greater_than_or_equal_to: 0.01 }
   validates :image, allow_blank: false, format: {
     with: %r{\.(gif|jpg|png)\Z}i,
@@ -24,9 +22,15 @@ class Product < ApplicationRecord
     code
   end
 
-  # def rating
-  #   #average of given ratings by users
-  #   #@product.rating = average of @product.reviews.rating
-  # end
+  def rating
+    self.reviews.average(:rating)
+  end
+
+  def discounted_price
+    if self.discount && self.discount > 0
+      self.price - (self.price * (self.discount.to_f/100))
+    end
+  end
   
 end
+

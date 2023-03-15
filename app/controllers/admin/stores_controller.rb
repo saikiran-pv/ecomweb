@@ -28,7 +28,7 @@ class Admin::StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to admin_stores_url(@store), notice: "Store was successfully created." }
+        format.html { redirect_to admin_stores_path, notice: "Store was successfully created." }
         format.json { render :show, status: :created, location: @store }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +41,7 @@ class Admin::StoresController < ApplicationController
     @store=Store.find(params[:id])
     respond_to do |format|
       if @store.update(store_params)
-        format.html { redirect_to store_url(@store), notice: "Store was successfully updated." }
+        format.html { redirect_to admin_stores_path, notice: "Store was successfully updated." }
         format.json { render :show, status: :ok, location: @store }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,13 +51,8 @@ class Admin::StoresController < ApplicationController
   end
 
   def destroy
-    @store=Store.find(params[:store_id])
     @store.destroy
-
-    respond_to do |format|
-      format.html { redirect_to stores_url, notice: "Store was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to admin_stores_path, notice: "Store destroyed successfully"
   end
 
   private

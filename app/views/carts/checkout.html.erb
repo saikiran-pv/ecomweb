@@ -6,22 +6,40 @@
 
   
   <%= form_with url: place_order_path do |f|%>
-    <%= f.label :delivery_address %>
-    <%= select_tag :delivery_address, options_from_collection_for_select(Address.where(user_id: current_user.id), "id", "area"), :required =>true,class:"form-control py-2" %><br>
+    <% if @order.errors.any? %>
+      <div style="color: red">
+        <ul>k
+          <% @order.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.label :delivery_address do %>
+    Delivery address<span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= select_tag :delivery_address, options_from_collection_for_select(Address.where(user_id: current_user.id), "id", "area"), :required =>true %><br>
 
     <div class="">
         <%= link_to "Add new address", new_user_address_path(user_id: current_user.id), class: "btn btn-success" %><br><br>
     </div>
 
-    <%= f.label :card_number%>
-    <%= f.number_field :card_number, :required =>true, class:"form-control py-2" %><br>
+    <%= f.label :card_number do %>
+    Card Number<span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= f.text_field :card_number, :required =>true, class:"form-control py-2" %><br>
 
-    <%= f.label :cvv %>
-    <%= f.number_field :cvv,:required =>true, class:"form-control py-2" %><br>
+    <%= f.label :cvv do %>
+    CVV <span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= f.text_field :cvv, pattern: '[0-9]{3}', :required =>true, class:"form-control py-2" %><br>
 
-    <%= f.label :expiry_date %>
-    <%= f.date_field :expiry_date,:required =>true, class:"form-control py-2" %><br>
-
+    <%= f.label :expiry_date, 'Expiration Date (YYYY/MM)' do %>
+    Expiration Date<span class="required" style="color:red;">*</span>
+    <% end %><br />
+    <%= f.date_select :expiry_date, :discard_day => true, :start_year => Date.today.year, :end_year => (Date.today.year+10), :use_month_numbers => true, class:"form-control py-2" %>  
+    
     <%= f.submit "Proceed and Place Order",class:"form-control py-2 btn btn-dark fw-bold shadow" %>
   
   <% end %>

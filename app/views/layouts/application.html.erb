@@ -95,7 +95,6 @@
           <a style="color:white;"><%= link_to "Products",all_products_path, class:"btn btn-dark"%></a><br>
           <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Women">Women</a><br>
           <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Men">Men</a><br>
-          <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Kids">Kids</a><br> 
           <a class="btn btn-dark" style="color:white;" href="http://localhost:3000/categories/Accessories">Accessories</a><br>
         <% end %>
         <!-- <% if current_user %>
@@ -138,7 +137,7 @@
      </div>
     </div>
 
-   <div class="split right" style="margin-top:60px;">
+   <div class="split right" style="margin-top:60px;padding-bottom:80px;">
     <% flash.each do |type, message| %>
       <div style="top: -5px;width:1270px;margin-left: 6%; position:absolute;z-index:10; text-align: center" id="flash" class="alert <%= bootstrap_class_for(type) %> alert-dismissible" role="alert">
         <%= message %>
@@ -150,6 +149,31 @@
   
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style>
     .collapse navbar-collapse{

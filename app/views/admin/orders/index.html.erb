@@ -1,0 +1,26 @@
+<h2>All Orders</h2>
+
+<table class="table">
+<thead>
+  <tr>
+    <th>Order ID</th>              
+    <th>Placed On</th>
+    <th>Placed By</th>                      
+    <th>Total</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+ <% @orders.each do |order| %>
+  <tr>
+    <td><%= order.id%></td>
+    <td><%= order.updated_at%></td>  
+    <td><%= order.user.name%> </td>       
+    <td>Rs. <%=order.total_price %></td>   
+    <td style="display:flex; flex-direction:row;">
+      <%= link_to "Order Details", admin_order_path(order.id), class: "btn btn-success" %>
+    </td>   
+  </tr>
+  <% end %>
+  </tbody>
+ </table>

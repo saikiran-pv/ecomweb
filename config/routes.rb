@@ -12,8 +12,8 @@ Rails.application.routes.draw do
 
   resources :categories, param: "category_name"
   resources :products, param: "code"
-  resources :orders
   resources :stores
+  resources :orders
 
   resources :stores do
     resources :products, param: "code"
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   delete 'carts/:id', to: "carts#destroy"
   post '/carts/add_to_cart', to: "carts#add_to_cart", as:"add_to_cart"
   delete '/carts/remove_from_cart/:id', to: "carts#remove_from_cart", as: "remove_from_cart"
-  post 'carts/empty_cart', to: "carts#empty_cart", as: "empty_cart"
+  get 'carts/empty_cart', to: "carts#empty_cart", as: "empty_cart"
   patch 'carts/update_cart/:id', to: "carts#update_cart", as: "update_cart"
   get '/error', to:"carts#error", as:"error"
  
@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   post 'line_items' , to: "line_items#create"
   get 'line_items/:id' , to: "line_items#show", as: "line_item"
   delete 'line_items/:id', to:"line_items#destroy"
+
+
 
   post '/place_order', to:"carts#place_order", as:"place_order"
   get '/thank_you', to: 'orders#thank_you'
