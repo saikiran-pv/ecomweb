@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :check_user_permission
+  # before_action :check_user_permission
 
   def index
     if current_user.is_admin?
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:notice]="Created #{user.role} successfully"
-      redirect_to admin_users_path
+      redirect_to root_path
     else
       render :action => 'new'
     end
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+        format.html { redirect_to root_path, notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -48,7 +48,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    binding.pry
     @user.destroy
 
     respond_to do |format|
@@ -63,17 +62,8 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :role, :phone_number, :address, :additional_address, :email, :store_id)
+      params.permit(:name, :phone_number, :email)
     end
-    #   if @user.super_admin?
-    #     params.require(:user).permit(:name, :role, :phone_number, :address, :additional_address, :email, :store_name)
-    #   elsif @user.store_admin?
-    #     params.require(:user).permit(:name, :role, :phone_number, :address, :additional_address, :email, :store_name)
-    #   elsif @user.staff?
-    #     params.require(:user).permit(:name, :role, :phone_number, :address, :additional_address, :email)
-    #   else
-    #     params.require(:user).permit(:name, :role, :phone_number, :address, :additional_address, :email)
-    #   end
-    # end
+
 end
 

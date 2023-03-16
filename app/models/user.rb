@@ -22,9 +22,9 @@ class User < ApplicationRecord
                     format: { with: URI::MailTo::EMAIL_REGEXP }, if: -> { role == 'User' },
                     uniqueness: { case_sensitive: false, message: "has already been taken" }
   
-  validates :email, presence: true, length: { maximum: 30 },
-                    format: { with: /\A[\w+\-.]+@shopify\.com\z/i }, if: -> { role == 'Admin' || 'Store Admin'|| 'Staff' },
-                    uniqueness: { case_sensitive: false, message: "has already been taken" }
+  # validates :email, presence: true, length: { maximum: 30 },
+  #                   format: { with: /\A[\w+\-.]+@shopify\.com\z/i }, if: -> { role == 'Admin' || 'Store Admin'|| 'Staff' },
+  #                   uniqueness: { case_sensitive: false, message: "has already been taken" }
 
   validates :phone_number, presence: true, length: { is: 10, message:"must be 10 digits" }, format: { with: /[0-9]{10}/, message: "must be a valid" }
 

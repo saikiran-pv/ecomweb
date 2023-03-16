@@ -4,7 +4,7 @@
 <div class="row py-2">
  <div class= "col-lg-4 mx-auto">
  
-<%= form_with url: admin_users_path do |f| %>
+<%= form_with url: admin_user_path(@user), method: :patch do |f| %>
 
    <div class="field mt-3">
     <%= f.label :name %><br />
@@ -13,7 +13,7 @@
 
   <div class="field mt-3">
     <%= f.label :assign_role %><br />
-    <%= f.select :role, [['Admin', 'super_admin'], ['Store Admin', 'store_admin'], ['Staff','staff']], autofocus: true,value: @user.role, autocomplete: "role", :required =>true, class:"form-control py-2"%>    
+    <%= f.select :role, [['Admin', 'super_admin'], ['Store Admin', 'store_admin'], ['Staff','staff'], ['User', "user"]], autofocus: true,selected: @user.role, autocomplete: "role", :required =>true, class:"form-control py-2"%>    
     <div id="store-name-field"style="display:none;">
       <%= f.label :store %>
       <%= select_tag :store_id, options_from_collection_for_select(Store.all, "id", "store_name"), autofocus: true, :required =>true, class:"form-control py-2"%>
@@ -22,12 +22,12 @@
 
   <div class="field mt-3">
     <%= f.label :email do %>
-      Email<span class="required" style="color:red;">*</span>
+      Email
     <% end %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email",value: @user.email, :required =>true, class:"form-control py-2"  %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",value: @user.email, :disabled => true, class:"form-control py-2"  %>
   </div>
 
-  <div class="field mt-3">
+  <!-- <div class="field mt-3">
     <%= f.label :password do %>
       Password<span class="required" style="color:red;">*</span>
     <% end %>
@@ -42,10 +42,10 @@
       Password Confirmation<span class="required" style="color:red;">*</span>
     <% end %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password", :required =>true, class:"form-control py-2"  %>
-  </div>
+  </div> -->
 
   <div class="actions mt-4 mb-5">
-    <%= f.submit "Create", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow" %>
+    <%= f.submit "Update", data: {turbo:false}, class:"form-control py-2 btn btn-dark fw-bold shadow" %>
   </div>
 <% end %>
 

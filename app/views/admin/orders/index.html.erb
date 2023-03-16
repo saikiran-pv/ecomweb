@@ -5,8 +5,9 @@
   <tr>
     <th>Order ID</th>              
     <th>Placed On</th>
-    <th>Placed By</th>                      
+    <th>User</th>                      
     <th>Total</th>
+    <th>Order Status</th>
     <th></th>
   </tr>
 </thead>
@@ -16,7 +17,8 @@
     <td><%= order.id%></td>
     <td><%= order.updated_at%></td>  
     <td><%= order.user.name%> </td>       
-    <td>Rs. <%=order.total_price %></td>   
+    <td>Rs. <%=order.total_price %></td>
+    <td><%= order.status%></td>   
     <td style="display:flex; flex-direction:row;">
       <%= link_to "Order Details", admin_order_path(order.id), class: "btn btn-success" %>
     </td>   

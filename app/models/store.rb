@@ -1,5 +1,5 @@
 class Store < ApplicationRecord
-    has_many :products
+    has_many :products, :dependent => :destroy
     
     validates :store_name, :uniqueness => { :message => "already exists" }
     validates :description, :presence => { :message => " needs to be filled" }

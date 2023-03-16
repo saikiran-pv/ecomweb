@@ -50,7 +50,6 @@ class ProductsController < ApplicationController
   end
 
   def create
-    binding.pry
     @product = Product.create(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :visibility=> params[:visibility], :image=> params[:image],:code=>params[:code])
     if @product.save
       redirect_to products_path

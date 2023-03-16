@@ -51,10 +51,14 @@ class CartsController < ApplicationController
   end
 
   def checkout
+    # if @order.total_price.present?
+    # else
+    #   flash[:error]="Your Cart is empty, add products to cart to place the order!"
+    #   redirect_to cart_path
+    # end
   end
 
   def place_order
-    binding.pry
     @payment= Payment.new(:card_number => params[:card_number], :cvv => params[:cvv], :expiry_date => "#{params["expiry_date(1i)"]}/#{params["expiry_date(2i)"]}", :order_id => @order.id)
     @order.address_id = params[:delivery_address]
     # @order.card_number = params[:card_number]

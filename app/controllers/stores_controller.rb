@@ -1,6 +1,6 @@
 class StoresController < ApplicationController
   before_action :set_store, only: %i[ show edit update destroy ]
-  before_action :check_user_permission
+  # before_action :check_user_permission
 
   def index
     @stores = Store.all

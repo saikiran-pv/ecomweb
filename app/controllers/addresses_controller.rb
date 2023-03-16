@@ -26,7 +26,6 @@ class AddressesController < ApplicationController
     end
 
     def destroy
-        binding.pry
         @user=User.find(current_user.id)
         @address=@user.addresses.find(:address_id)
         @address.destroy

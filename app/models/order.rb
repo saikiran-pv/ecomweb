@@ -26,12 +26,3 @@ class Order < ApplicationRecord
 
 end
 
-
-# def calculate_total_price
-#   sum=0
-#   self.line_items.each do |line_item|
-#     sum += line_item.total_price
-#   end
-#   binding.pry
-#   self.total_price = sum
-# end

@@ -6,7 +6,6 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    binding.pry
     @product = Product.find_by(code: params[:product_code])
     @review = @product.reviews.new(:rating => params[:rating], :comment => params[:comment], :user_id => current_user.id)
     if @review.save
