@@ -1,5 +1,5 @@
 class Admin::CategoriesController < ApplicationController
-  before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :set_category, only: %i[show edit update destroy]
   before_action :check_user_permission
 
   # GET /categories or /categories.json
@@ -20,7 +20,7 @@ class Admin::CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    @category=Category.find_by(category_name: params[:category_name])
+    @category = Category.find_by(category_name: params[:category_name])
   end
 
   # POST /categories or /categories.json
@@ -55,17 +55,17 @@ class Admin::CategoriesController < ApplicationController
   def destroy
     @category.destroy
     redirect_to admin_categories_path, notice: "Category destroyed successfully"
-
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find_by(category_name: params[:category_name])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def category_params
-      params.permit(:category_name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find_by(category_name: params[:category_name])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def category_params
+    params.permit(:category_name, :description)
+  end
 end

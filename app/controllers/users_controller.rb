@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[show edit update destroy]
   # before_action :check_user_permission
 
   def index
@@ -7,13 +7,13 @@ class UsersController < ApplicationController
       @users = User.all
     end
     if current_user.user?
-      flash[:error]="You can't access this page"
+      flash[:error] = "You can't access this page"
       redirect_to error_path
     end
   end
 
   def show
-    @user= User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def new
@@ -21,17 +21,16 @@ class UsersController < ApplicationController
   end
 
   def edit
-    
   end
 
   def create
     @user = User.new(user_params)
 
     if @user.save
-      flash[:notice]="Created #{user.role} successfully"
+      flash[:notice] = "Created #{user.role} successfully"
       redirect_to root_path
     else
-      render :action => 'new'
+      render action: "new"
     end
   end
 
@@ -57,13 +56,12 @@ class UsersController < ApplicationController
   end
 
   private
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    def user_params
-      params.permit(:name, :phone_number, :email)
-    end
+  def set_user
+    @user = User.find(params[:id])
+  end
 
+  def user_params
+    params.permit(:name, :phone_number, :email)
+  end
 end
-

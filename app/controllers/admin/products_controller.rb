@@ -1,10 +1,10 @@
 class Admin::ProductsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:all_products, :record, :home, :show]
-  before_action :set_product, only: %i[ show update destroy ]
+  before_action :set_product, only: %i[show update destroy]
   before_action :check_user_permission
-  
+
   def home
-    render :template => "home"
+    render template: "home"
   end
 
   def index
@@ -16,18 +16,20 @@ class Admin::ProductsController < ApplicationController
       @products = Store.find(current_user.store_id).products
     end
     if params[:category_id]
-      @products = @products.where(:category_id => params[:category_id])
+      @category = Category.find(params[:category_id])
+      @products = @products.where(category_id: @category.id)
     end
   end
 
   def show
-    @store=Store.find(params[:store_id]) if params[:store_id]
+    @store = Store.find(params[:store_id]) if params[:store_id]
+    @category = Category.find(category_name: params[:category_name]) if params[:category_name]
     @product = Product.find_by(code: params[:code])
   end
 
   def record
-    @products=Product.order(rating: :desc).paginate(:page => 1, per_page: 5)
-    render :template => "record"
+    @products = Product.order(rating: :desc).paginate(page: 1, per_page: 5)
+    render template: "record"
   end
 
   def new
@@ -37,16 +39,16 @@ class Admin::ProductsController < ApplicationController
   end
 
   def edit
-    @product=Product.find_by(code: params[:code])
+    @product = Product.find_by(code: params[:code])
   end
 
   def create
-    @product = Product.new(:product_name => params[:product_name],:price=> params[:price], :description=> params[:description], :discount=> params[:discount], :image=> params[:image],:code=>params[:code],:store_id => params[:store_id], :category_id => params[:category_id])
+    @product = Product.new(product_name: params[:product_name], price: params[:price], description: params[:description], discount: params[:discount], image: params[:image], rating: params[:rating], code: params[:code], store_id: params[:store_id], category_id: params[:category_id])
     # @product.rating = 0
     if @product.save
       redirect_to admin_products_path, notice: "Added a product successfully"
     else
-      render :action => 'new'
+      render action: "new"
     end
   end
 
@@ -55,29 +57,30 @@ class Admin::ProductsController < ApplicationController
     if @product.update(product_params)
       redirect_to admin_products_path, notice: "Updated product successfully"
     else
-      render :action => 'edit'
+      render action: "edit"
     end
   end
 
   def destroy
     @product.destroy
-    redirect_to admin_products_path,notice: "Product destroyed successfully"
+    redirect_to admin_products_path, notice: "Product destroyed successfully"
   end
 
   private
-    def set_product
-      @product = Product.find_by(code: params[:code])
-    end
 
-    def set_store
-      @store = Store.find(params[:store_id])
-    end
+  def set_product
+    @product = Product.find_by(code: params[:code])
+  end
 
-    def set_category
-      @category = Category.find(params[:category_id])
-    end
+  def set_store
+    @store = Store.find(params[:store_id])
+  end
 
-    def product_params
-      params.permit(:product_name, :price, :description, :discount, :image, :code, :store_id, :category_id)  
-    end
+  def set_category
+    @category = Category.find(params[:category_id])
+  end
+
+  def product_params
+    params.permit(:product_name, :price, :description, :discount, :image, :rating, :code, :store_id, :category_id)
+  end
 end

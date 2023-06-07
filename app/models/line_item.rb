@@ -3,9 +3,6 @@ class LineItem < ApplicationRecord
   belongs_to :order
 
   def total_price
-    self.quantity * self.product.discounted_price
+    quantity.to_i * (product.discounted_price || product.price)
   end
-
 end
-
-

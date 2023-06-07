@@ -4,7 +4,9 @@
 <thead>
 <tr><th>
   Paid: Rs.<%= @order.total_price%><br>
-  Delivered to: <%= @order.address.address_type %><br>
+  <% if @order.address%>
+    Delivered to: <%= @order.address.address_type %><br>
+  <% end %>
   Placed on:  <%= @order.updated_at%><br></th>
 </tr>
 </thead>

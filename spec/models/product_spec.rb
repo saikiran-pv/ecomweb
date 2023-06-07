@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Product, type: :model do
   it "should have many line_items" do
@@ -28,27 +28,27 @@ RSpec.describe Product, type: :model do
   subject { described_class.new(product_name: "test", description: "test", discount: 7, rating: 3, code: 10307) }
 
   it "is valid with valid product_name" do
-    subject.product_name = nil 
+    subject.product_name = nil
     expect(subject).to_not be_valid
   end
 
   it "is valid with valid description" do
-    subject.description = nil 
+    subject.description = nil
     expect(subject).to_not be_valid
   end
 
   it "is valid with valid discount" do
-    subject.discount = nil 
+    subject.discount = nil
     expect(subject).to_not be_valid
   end
 
   it "is valid with valid rating" do
-    subject.rating = nil 
+    subject.rating = nil
     expect(subject).to_not be_valid
   end
 
   it "is valid with valid code" do
-    subject.code = nil 
+    subject.code = nil
     expect(subject).to_not be_valid
   end
 end

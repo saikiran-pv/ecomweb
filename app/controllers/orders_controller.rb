@@ -1,22 +1,16 @@
 class OrdersController < ApplicationController
-
   def index
     @orders = Order.where(user_id: current_user.id, status: "placed")
   end
 
   def show
-    @order = Order.find(params[:id])
+    unless @order = current_user.orders.find_by_id(params[:id])
+      redirect_to error_path
+    end
   end
 
   def new
     @order = Order.new
-  end
-
-  def place_order
-    @order = current_order
-    @cart = current_order
-    @order= Order.find(params[:id])
-    @order=@order.status.update(status: "placed")
   end
 
   def create
@@ -30,9 +24,10 @@ class OrdersController < ApplicationController
     session[:cart_id] = nil
     redirect_to orders_path
   end
-  
+
   private
-    def order_params
-      params.require(:order).permit(:user_id, :total_price)
-    end
+
+  def order_params
+    params.require(:order).permit(:user_id, :total_price)
+  end
 end

@@ -14,6 +14,7 @@ gem "sqlite3", "~> 1.4"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
+gem "brakeman"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -23,17 +24,17 @@ gem "turbo-rails"
 
 gem "pry-rails"
 
-gem 'sass-rails'
+gem "sass-rails"
 
 gem "will_paginate"
 
 gem "imagemagick-binaries"
 
-gem 'jquery-rails'
+gem "jquery-rails"
 
-gem 'pg_search'
+gem "pg_search"
 
-gem 'turbolinks'
+gem "turbolinks"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
@@ -46,6 +47,8 @@ gem "carrierwave"
 gem "rails_refactor"
 
 gem "ransack"
+
+gem "stripe"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -56,7 +59,7 @@ gem "ransack"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -69,10 +72,12 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "dotenv-rails"
+  gem "standard"
+  gem "rubocop-1.51.1", git: 'https://github.com/renusriperiketi/rubocop-1.51.1'
 end
 
 group :development do
@@ -95,4 +100,6 @@ end
 
 gem "devise", "~> 4.9"
 
-gem "stripe"
+gem "money"
+
+

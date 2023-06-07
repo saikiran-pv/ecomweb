@@ -1,42 +1,24 @@
-<%= @category.category_name %>
+<h2 class="text-center"><%= @category.category_name %></h2>
 
 <div>
-  <%= link_to "Edit this category", edit_admin_category_path(@category) %> |
-  <%= link_to "Back to categories", admin_categories_path %><br>
-  <br>
-  <%= button_to "Destroy this category", @category, data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Are you sure?"
-                } %>
-
-
-<br>
-
-
-<br>
-<br>
-
-  <div>
-    <%= link_to "Show products", admin_category_products_path(@category) %>
-  </div>
+  <%= link_to "Show products summary", admin_category_products_path(category_id: @category.id) %>
 </div>
 
 <div class="row" style="margin-bottom:80px;">
   <% @products.each do |product|%>
       <div class="col-md-4" onclick="show(this)">
-
         <div class="product-box" id="product-box">
-            <%=image_tag product.image.url, class:"product-index" if product.image?%>
+            <%= image_tag product.image.url, class:"product-index" if product.image?%>
               <ul>
-                    <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
-                        Rs.<%= product.price%><br>
-                        <span>&#11088;</span><%= product.rating%><br>
-                    
-                        <%= link_to "", admin_product_path(code: product.code)%>
+                  <strong class="product-name"><%= product.product_name%></strong><br>by <strong><%= product.store.store_name%></strong><br>
+                  Rs.<%= product.price%><br>
+                  <span>&#11088;</span><%= product.rating%><br>
+              
+                  <%= link_to "", admin_product_path(code: product.code)%>
               </ul>
         </div>
       </div>
-  <%end%>
+  <% end %>
 </div>
 
 <%= javascript_include_tag "show"%>

@@ -1,5 +1,4 @@
 class ImageUploader < CarrierWave::Uploader::Base
-  
   storage :file
 
   def store_dir
@@ -30,11 +29,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   process resize_to_fit: [300, 300]
   # end
 
-
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_allowlist
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 
   # Override the filename of the uploaded files:

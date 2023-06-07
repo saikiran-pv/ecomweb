@@ -1,17 +1,17 @@
 class Admin::StoresController < ApplicationController
   before_action :check_user_permission
-  before_action :set_store, only: %i[ show edit update destroy ]
+  before_action :set_store, only: %i[show edit update destroy]
 
   def index
     if current_user.store_admin?
-      @stores = Store.where(:id => current_user.store_id)
+      @stores = Store.where(id: current_user.store_id)
     elsif current_user.super_admin? || current_user.staff?
       @stores = Store.all
     end
   end
 
   def show
-    @store=Store.find(params[:id])
+    @store = Store.find(params[:id])
     @products = @store.products
   end
 
@@ -20,7 +20,7 @@ class Admin::StoresController < ApplicationController
   end
 
   def edit
-    @store=Store.find(params[:id])
+    @store = Store.find(params[:id])
   end
 
   def create
@@ -38,7 +38,7 @@ class Admin::StoresController < ApplicationController
   end
 
   def update
-    @store=Store.find(params[:id])
+    @store = Store.find(params[:id])
     respond_to do |format|
       if @store.update(store_params)
         format.html { redirect_to admin_stores_path, notice: "Store was successfully updated." }
@@ -56,11 +56,12 @@ class Admin::StoresController < ApplicationController
   end
 
   private
-    def set_store
-      @store = Store.find(params[:id])
-    end
 
-    def store_params
-      params.permit(:store_name, :description)
-    end
+  def set_store
+    @store = Store.find(params[:id])
+  end
+
+  def store_params
+    params.permit(:store_name, :description, :logo)
+  end
 end

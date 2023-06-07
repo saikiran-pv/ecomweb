@@ -6,6 +6,6 @@ FactoryBot.define do
     address { "test" }
     phone_number { 9876678998 }
     role { "user" }
-    store_id {1}
+    store_id { 1 }
   end
 end

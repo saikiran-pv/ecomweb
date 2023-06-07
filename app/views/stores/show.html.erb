@@ -1,4 +1,4 @@
-<h2 class="text-center"><%= @store.store_name%></h2>
+<h2 class="text-center"> <%= image_tag @store.logo.url, width:200  if @store.logo?%><br></h2>
 <% if @store.products.present?%>
   <div class="row" style="margin-bottom:80px;">
     <% @products.each do |product|%>

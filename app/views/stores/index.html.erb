@@ -7,8 +7,8 @@
         <div class="col-md-4" onclick="show(this)">
           <div class="store-box">
                 <ul>
-                      <strong><%= store.store_name%></strong><br>
-                      <%= store.description%><br>
+                      <%= image_tag store.logo.url, width:200  if store.logo?%><br>
+                       <%= store.description%><br>
                        <%= link_to "", store%> 
                 </ul>
           </div>

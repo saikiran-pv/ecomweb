@@ -1,7 +1,9 @@
 <div class="text-center">
-  <h2><%= @store.store_name %></h2>
+  <h2><%= image_tag @store.logo.url, width:180 %></h2>
    <%= link_to "Show products summary", admin_store_products_path(@store) %>
 </div>
+
+
 
 <div class="row" style="margin-bottom:80px;">
   <% @products.each do |product|%>

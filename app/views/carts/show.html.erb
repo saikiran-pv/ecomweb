@@ -32,7 +32,11 @@
                   <td><%= item.product.product_name %></td>
                   <td>Rs.<%= item.product.price  %></td>
                   <td><strong>Rs.<%= item.total_price %></strong><br>
-                   <%= content_tag :p, item.price * item.quantity, style: "text-decoration: line-through;color: gray;" %></td>
+
+                  <% if item.product.discount%>
+                   <%= content_tag :p, item.product.price * item.quantity, style: "text-decoration: line-through;color: gray;" %>
+                  <% end %>
+                  </td>
                   <td>
                     <%= button_to "Remove", remove_from_cart_path(item.id), method: :delete %>
                     <%= button_to "Update", update_cart_path(item.id), method: :patch, :id => "update_#{item.id}", params: { "quantity": item.quantity }%>
