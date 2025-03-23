@@ -7,8 +7,11 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.find_by(category_name: params[:category_name])
-    @products = @category.products
+    if @category = Category.find_by(category_name: params[:category_name])
+      @products = @category.products
+    else
+      redirect_to categories_path
+    end
   end
 
   private

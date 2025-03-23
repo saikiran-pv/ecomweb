@@ -1,3 +1,4 @@
+require "pry"
 class Admin::CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
   before_action :check_user_permission
@@ -9,6 +10,7 @@ class Admin::CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    binding.pry
     @category = Category.find_by(category_name: params[:category_name])
     @products = @category.products
   end

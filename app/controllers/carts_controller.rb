@@ -53,6 +53,7 @@ class CartsController < ApplicationController
   end
 
   def place_order
+    binding.pry
     @payment = Payment.new(card_number: params[:card_number], cvv: params[:cvv], expiry_date: "#{params["expiry_date(1i)"]}/#{params["expiry_date(2i)"]}", order_id: @order.id)
     @order.address_id = params[:delivery_address]
     if @order.save

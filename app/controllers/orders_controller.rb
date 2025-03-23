@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def show
+    binding.pry
     unless @order = current_user.orders.find_by_id(params[:id])
       redirect_to error_path
     end
