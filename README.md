@@ -1,29 +1,53 @@
-# README
+# E-Commerce Application (Ruby on Rails)
 
-"# code-audit-demo-app" 
+## Overview
+This is a full-featured e-commerce application built using **Ruby on Rails** with **JavaScript, HTML, and CSS** for the frontend and **SQLite3** as the database. It provides all the essential e-commerce functionalities, including product management, user authentication, shopping cart, checkout, and order management.
 
-This README would normally document whatever steps are necessary to get the
-application up and running...
+## Features
+- **User Authentication** (Sign up, Login, Logout, Profile Management)
+- **Product Management** (CRUD operations for admins)
+- **Shopping Cart** (Add, Remove, Update items)
+- **Checkout Process** (Order summary, Payment gateway integration)
+- **Order Management** (Order tracking, History)
+- **Category & Search Functionality**
+- **Responsive UI** for seamless experience across devices
+- **Admin Panel** for managing users, orders, and products
 
-Things you may want to cover:
+## Tech Stack
+- **Backend:** Ruby on Rails
+- **Frontend:** JavaScript, HTML, CSS
+- **Database:** SQLite3
+- **Authentication:** Devise (for user management)
+- **Payment Gateway:** Stripe (or other integrations if needed)
+- **Testing:** RSpec, Capybara
 
-* Ruby version
+## Installation & Setup
+1. **Clone the Repository:**
+   ```sh
+   git clone https://github.com/yourusername/ecommerce-rails.git
+   cd ecommerce-rails
+   ```
 
-* System dependencies
+2. **Install Dependencies:**
+   ```sh
+   bundle install
+   npm install
+   ```
 
-* Configuration
+3. **Set Up Database:**
+   ```sh
+   rails db:create db:migrate db:seed
+   ```
 
-* Database creation
+4. **Start the Server:**
+   ```sh
+   rails server
+   ```
+   Visit `http://localhost:3000` in your browser.
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-@@@@@@@@@
-# ecomweb
+## Usage
+- Register or log in to your account.
+- Browse products and add them to the shopping cart.
+- Proceed to checkout and complete payment.
+- Track orders from your profile dashboard.
+- Admins can manage products, orders, and users.
